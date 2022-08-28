@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mvvm_project/app/services/user_service.dart';
 import 'package:provider/provider.dart';
 import '../helpers/validators.dart';
 import '../services/authentication_service.dart';
@@ -12,6 +13,7 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   String error = '';
@@ -20,6 +22,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   void dispose() {
+    nameController.dispose();
     emailController.dispose();
     passwordController.dispose();
     super.dispose();
@@ -28,6 +31,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     final authService = context.watch<AuthenticationService>();
+    final userService = context.watch<UserService>();
 
     return Scaffold(
       appBar: AppBar(
@@ -39,6 +43,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
               key: _formKey,
               child: Column(
                 children: [
+                  TextFormField(
+                    controller: nameController,
+                    decoration: const InputDecoration(
+                      label: Text(
+                        'Your Name',
+                      ),
+                    ),
+                    validator: ((value) => Validators.validateName(value)),
+                  ),
                   TextFormField(
                     controller: emailController,
                     decoration: const InputDecoration(
@@ -65,17 +78,31 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           loading = true;
                         });
 
-                        final res =
-                            await authService.registerWithEmailAndPassword(
+                        final user = await authService.registerNewUser(
                           email: emailController.text,
                           password: passwordController.text,
                         );
 
-                        if (res is! bool) {
+                        if (user == null) {
                           setState(() {
                             loading = false;
-                            error = res;
+                            error =
+                                'Unable to register with given credentails!';
                           });
+                        } else {
+                          // Add user to firestore
+                          final savedUser = await userService.createNewUser(
+                            email: emailController.text,
+                            name: nameController.text,
+                            uid: user.uid,
+                          );
+
+                          if (savedUser == null) {
+                            setState(() {
+                              loading = false;
+                              error = 'User profile not created!';
+                            });
+                          }
                         }
                       }
                     },

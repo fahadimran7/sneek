@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mvvm_project/app/services/authentication_service.dart';
+import 'package:flutter_mvvm_project/app/services/user_service.dart';
 import 'package:flutter_mvvm_project/app/views/authenticate.dart';
 import 'package:flutter_mvvm_project/app/views/home_screen.dart';
 import 'package:provider/provider.dart';
@@ -17,8 +18,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Provider(
-      create: (_) => AuthenticationService(),
+    return MultiProvider(
+      providers: [
+        Provider(
+          create: (_) => AuthenticationService(),
+        ),
+        Provider(
+          create: (_) => UserService(),
+        ),
+      ],
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(

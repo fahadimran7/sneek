@@ -27,7 +27,7 @@ class AuthenticationService {
     }
   }
 
-  dynamic registerWithEmailAndPassword(
+  dynamic registerNewUser(
       {required String email, required String password}) async {
     try {
       final user = await _auth.createUserWithEmailAndPassword(
@@ -35,11 +35,9 @@ class AuthenticationService {
         password: password,
       );
 
-      return user.user != null;
-    } on FirebaseAuthException catch (e) {
-      return e.message;
+      return user.user;
     } catch (e) {
-      return e.toString();
+      return null;
     }
   }
 

@@ -1,4 +1,12 @@
 class Validators {
+  static validateName(name) {
+    if (name == null || name.isEmpty) {
+      return 'Name cannot be empty';
+    }
+
+    return null;
+  }
+
   static validateEmail(email) {
     if (email == null || email.isEmpty) {
       return 'Email Address cannot be empty';
