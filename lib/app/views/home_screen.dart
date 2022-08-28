@@ -21,11 +21,29 @@ class HomeScreen extends StatelessWidget {
             builder: (BuildContext context,
                 AsyncSnapshot<DocumentSnapshot> snapshot) {
               if (snapshot.hasError) {
-                return const Text('Something went wrong!');
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text('Something went wrong!'),
+                    ElevatedButton(
+                      onPressed: () => authService.logOut(),
+                      child: const Text('Log out'),
+                    )
+                  ],
+                );
               }
 
               if (snapshot.hasData && !snapshot.data!.exists) {
-                return const Text("Document does not exist");
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text("Document does not exist"),
+                    ElevatedButton(
+                      onPressed: () => authService.logOut(),
+                      child: const Text('Log out'),
+                    )
+                  ],
+                );
               }
 
               if (snapshot.connectionState == ConnectionState.done) {
