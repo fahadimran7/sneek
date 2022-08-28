@@ -4,11 +4,17 @@ import 'package:flutter_mvvm_project/app/services/authentication_service.dart';
 import 'package:flutter_mvvm_project/app/services/database_service.dart';
 import 'package:flutter_mvvm_project/app/views/products_screen/products_screen.dart';
 import 'package:flutter_mvvm_project/app/views/profile_screen/profile_screen.dart';
+import 'package:flutter_mvvm_project/app/views/wrapper/authenticate.dart';
 import 'package:provider/provider.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final authService = context.watch<AuthenticationService>();
@@ -56,7 +62,19 @@ class HomeScreen extends StatelessWidget {
                   children: [
                     Text("Name: ${data['name']}"),
                     ElevatedButton(
-                      onPressed: () => authService.logOut(),
+                      onPressed: () async {
+                        await authService.logOut();
+
+                        if (!mounted) return;
+
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const Authenticate(),
+                          ),
+                          (Route<dynamic> route) => false,
+                        );
+                      },
                       child: const Text('Log out'),
                     ),
                     ElevatedButton(

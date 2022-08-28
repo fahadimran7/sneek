@@ -51,21 +51,12 @@ class Layout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final authService = context.watch<AuthenticationService>();
+    final User? user = FirebaseAuth.instance.currentUser;
 
-    return StreamBuilder<User?>(
-        stream: authService.listenToAuthChanges(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.active) {
-            final User? user = snapshot.data;
-            return user == null ? const Authenticate() : const HomeScreen();
-          } else {
-            return const Scaffold(
-              body: Center(
-                child: CircularProgressIndicator(),
-              ),
-            );
-          }
-        });
+    if (user != null) {
+      return const HomeScreen();
+    }
+
+    return const OnBoarding();
   }
 }

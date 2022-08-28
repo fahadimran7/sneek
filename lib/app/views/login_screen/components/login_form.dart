@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mvvm_project/app/components/form_busy_button.dart';
 import 'package:flutter_mvvm_project/app/components/form_input_field.dart';
 import 'package:flutter_mvvm_project/app/helpers/validators.dart';
+import 'package:flutter_mvvm_project/app/views/home_screen/home_screen.dart';
 import 'package:provider/provider.dart';
 import '../../../components/white_space.dart';
 import '../../../services/authentication_service.dart';
@@ -45,6 +46,21 @@ class _LoginFormState extends State<LoginForm> {
           loading = false;
           error = res;
         });
+      } else {
+        setState(() {
+          loading = false;
+        });
+
+        if (!mounted) return;
+
+        // Todo: Use named routes
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (_) => const HomeScreen(),
+          ),
+          (Route<dynamic> route) => false,
+        );
       }
     }
   }

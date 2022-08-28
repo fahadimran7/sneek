@@ -5,6 +5,7 @@ import 'package:flutter_mvvm_project/app/helpers/validators.dart';
 import 'package:flutter_mvvm_project/app/services/database_service.dart';
 import 'package:provider/provider.dart';
 import '../../../services/authentication_service.dart';
+import '../../home_screen/home_screen.dart';
 
 class RegisterForm extends StatefulWidget {
   const RegisterForm({Key? key, this.toggleView}) : super(key: key);
@@ -30,13 +31,15 @@ class _RegisterFormState extends State<RegisterForm> {
     super.dispose();
   }
 
-  // Login Action
+  // Register Action
   onSubmitAction(authService, databaseService) async {
+    // Form validates successfully
     if (_formKey.currentState!.validate()) {
       setState(() {
         loading = true;
       });
 
+      // Firebase Auth create user
       final user = await authService.registerNewUser(
         email: emailController.text,
         password: passwordController.text,
@@ -48,18 +51,34 @@ class _RegisterFormState extends State<RegisterForm> {
           error = 'Unable to register with given credentails!';
         });
       } else {
-        // Add user to firestore
+        // Add user document to Firestore
         final savedUser = await databaseService.addUserToFirestore(
           email: emailController.text,
           name: nameController.text,
           uid: user.uid,
         );
 
+        // Document save error
         if (savedUser == null) {
           setState(() {
             loading = false;
             error = 'User profile not created!';
           });
+        } else {
+          // All OK redirect to Home Page
+          setState(() {
+            loading = false;
+          });
+
+          if (!mounted) return;
+
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (_) => const HomeScreen(),
+            ),
+            (Route<dynamic> route) => false,
+          );
         }
       }
     }
