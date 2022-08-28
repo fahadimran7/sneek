@@ -13,11 +13,12 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Login'),
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Scaffold(
+        body: SingleChildScrollView(
+            child: SafeArea(child: Body(toggleView: widget.toggleView))),
       ),
-      body: Body(toggleView: widget.toggleView),
     );
   }
 }

@@ -16,6 +16,12 @@ class FormBusyButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: onSubmitAction,
+      style: ElevatedButton.styleFrom(
+        minimumSize: const Size.fromHeight(50),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(6),
+        ),
+      ),
       child: loading
           ? const SizedBox(
               height: 18,
@@ -24,7 +30,13 @@ class FormBusyButton extends StatelessWidget {
                 color: Colors.white,
               ),
             )
-          : Text(title),
+          : Text(
+              title,
+              style: const TextStyle(
+                fontSize: 16,
+                color: Colors.white,
+              ),
+            ),
     );
   }
 }

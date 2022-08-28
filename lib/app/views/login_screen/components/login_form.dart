@@ -3,6 +3,7 @@ import 'package:flutter_mvvm_project/app/components/form_busy_button.dart';
 import 'package:flutter_mvvm_project/app/components/form_input_field.dart';
 import 'package:flutter_mvvm_project/app/helpers/validators.dart';
 import 'package:provider/provider.dart';
+import '../../../components/white_space.dart';
 import '../../../services/authentication_service.dart';
 
 class LoginForm extends StatefulWidget {
@@ -62,11 +63,17 @@ class _LoginFormState extends State<LoginForm> {
             validator: Validators.validateEmail,
             obscureText: false,
           ),
+          const WhiteSpace(
+            size: 'xs',
+          ),
           FormInputField(
             controller: passwordController,
             label: 'Password',
             validator: Validators.validatePassword,
             obscureText: false,
+          ),
+          const WhiteSpace(
+            size: 'md',
           ),
           FormBusyButton(
               title: 'Login',

@@ -18,10 +18,26 @@ class FormInputField extends StatelessWidget {
     return TextFormField(
       controller: controller,
       decoration: InputDecoration(
-        label: Text(
-          label,
-        ),
-      ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(6),
+            borderSide: const BorderSide(
+              width: 0,
+              style: BorderStyle.none,
+            ),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(6),
+            borderSide: const BorderSide(
+              style: BorderStyle.solid,
+            ),
+          ),
+          errorStyle: TextStyle(color: Colors.red.shade400),
+          errorBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.red.shade400, width: 1),
+          ),
+          fillColor: const Color.fromARGB(255, 243, 243, 243),
+          filled: true,
+          labelText: label),
       obscureText: obscureText,
       validator: ((value) => validator(value)),
     );

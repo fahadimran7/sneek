@@ -1,10 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mvvm_project/app/helpers/constants.dart';
 import 'package:flutter_mvvm_project/app/services/authentication_service.dart';
 import 'package:flutter_mvvm_project/app/services/database_service.dart';
+import 'package:flutter_mvvm_project/app/views/on_boarding/on_boarding_screen.dart';
 import 'package:flutter_mvvm_project/app/views/wrapper/authenticate.dart';
 import 'package:flutter_mvvm_project/app/views/home_screen/home_screen.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -31,7 +34,11 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          primarySwatch: Colors.green,
+          primarySwatch: primaryBlack,
+          scaffoldBackgroundColor: const Color.fromARGB(255, 255, 255, 255),
+          textTheme: GoogleFonts.nunitoTextTheme(
+            Theme.of(context).textTheme,
+          ),
         ),
         home: const Layout(),
       ),
@@ -51,7 +58,7 @@ class Layout extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.active) {
             final User? user = snapshot.data;
-            return user == null ? const Authenticate() : const HomeScreen();
+            return user == null ? const OnBoarding() : const HomeScreen();
           } else {
             return const Scaffold(
               body: Center(
