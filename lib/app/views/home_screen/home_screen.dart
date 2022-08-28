@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mvvm_project/app/services/authentication_service.dart';
-import 'package:flutter_mvvm_project/app/services/user_service.dart';
+import 'package:flutter_mvvm_project/app/services/database_service.dart';
+import 'package:flutter_mvvm_project/app/views/products_screen/products_screen.dart';
+import 'package:flutter_mvvm_project/app/views/profile_screen/profile_screen.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -10,12 +12,12 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authService = context.watch<AuthenticationService>();
-    final userService = context.watch<UserService>();
+    final databaseService = context.watch<DatabaseService>();
     return Scaffold(
       appBar: AppBar(title: const Text('Welcome')),
       body: Center(
         child: FutureBuilder<DocumentSnapshot>(
-            future: userService.findUserById(
+            future: databaseService.findUserById(
               uid: authService.loggedInUser()!.uid,
             ),
             builder: (BuildContext context,
@@ -56,6 +58,28 @@ class HomeScreen extends StatelessWidget {
                     ElevatedButton(
                       onPressed: () => authService.logOut(),
                       child: const Text('Log out'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => ProfileScreen(),
+                          ),
+                        );
+                      },
+                      child: Text('Profile'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => ProductsScreen(),
+                          ),
+                        );
+                      },
+                      child: Text('Products'),
                     )
                   ],
                 );

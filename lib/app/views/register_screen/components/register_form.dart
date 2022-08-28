@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mvvm_project/app/components/form_busy_button.dart';
 import 'package:flutter_mvvm_project/app/components/form_input_field.dart';
 import 'package:flutter_mvvm_project/app/helpers/validators.dart';
-import 'package:flutter_mvvm_project/app/services/user_service.dart';
+import 'package:flutter_mvvm_project/app/services/database_service.dart';
 import 'package:provider/provider.dart';
 import '../../../services/authentication_service.dart';
 
@@ -31,7 +31,7 @@ class _RegisterFormState extends State<RegisterForm> {
   }
 
   // Login Action
-  onSubmitAction(authService, userService) async {
+  onSubmitAction(authService, databaseService) async {
     if (_formKey.currentState!.validate()) {
       setState(() {
         loading = true;
@@ -49,7 +49,7 @@ class _RegisterFormState extends State<RegisterForm> {
         });
       } else {
         // Add user to firestore
-        final savedUser = await userService.createNewUser(
+        final savedUser = await databaseService.addUserToFirestore(
           email: emailController.text,
           name: nameController.text,
           uid: user.uid,
@@ -68,7 +68,7 @@ class _RegisterFormState extends State<RegisterForm> {
   @override
   Widget build(BuildContext context) {
     final authService = context.watch<AuthenticationService>();
-    final userService = context.watch<UserService>();
+    final databaseService = context.watch<DatabaseService>();
 
     return Form(
       key: _formKey,
@@ -94,7 +94,8 @@ class _RegisterFormState extends State<RegisterForm> {
           ),
           FormBusyButton(
               title: 'Register',
-              onSubmitAction: () => onSubmitAction(authService, userService),
+              onSubmitAction: () =>
+                  onSubmitAction(authService, databaseService),
               loading: loading),
           TextButton(
             onPressed: widget.toggleView,
