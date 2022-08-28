@@ -17,7 +17,10 @@ class _LoginScreenState extends State<LoginScreen> {
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
         body: SingleChildScrollView(
-            child: SafeArea(child: Body(toggleView: widget.toggleView))),
+          child: SafeArea(
+            child: Body(toggleView: widget.toggleView),
+          ),
+        ),
       ),
     );
   }

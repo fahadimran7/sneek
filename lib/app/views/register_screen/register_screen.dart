@@ -12,11 +12,15 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Register'),
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: SafeArea(
+            child: Body(toggleView: widget.toggleView),
+          ),
+        ),
       ),
-      body: Body(toggleView: widget.toggleView),
     );
   }
 }

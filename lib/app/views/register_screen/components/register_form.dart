@@ -4,6 +4,7 @@ import 'package:flutter_mvvm_project/app/components/form_input_field.dart';
 import 'package:flutter_mvvm_project/app/helpers/validators.dart';
 import 'package:flutter_mvvm_project/app/services/database_service.dart';
 import 'package:provider/provider.dart';
+import '../../../components/white_space.dart';
 import '../../../services/authentication_service.dart';
 import '../../home_screen/home_screen.dart';
 
@@ -99,11 +100,17 @@ class _RegisterFormState extends State<RegisterForm> {
             validator: Validators.validateName,
             obscureText: false,
           ),
+          const WhiteSpace(
+            size: 'xs',
+          ),
           FormInputField(
             controller: emailController,
             label: 'Email',
             validator: Validators.validateEmail,
             obscureText: false,
+          ),
+          const WhiteSpace(
+            size: 'xs',
           ),
           FormInputField(
             controller: passwordController,
@@ -111,14 +118,18 @@ class _RegisterFormState extends State<RegisterForm> {
             validator: Validators.validatePassword,
             obscureText: true,
           ),
+          const WhiteSpace(
+            size: 'md',
+          ),
           FormBusyButton(
               title: 'Register',
               onSubmitAction: () =>
                   onSubmitAction(authService, databaseService),
               loading: loading),
+          const WhiteSpace(),
           TextButton(
             onPressed: widget.toggleView,
-            child: const Text('Login'),
+            child: const Text('Already have an account? Login'),
           ),
           Text(
             error,
