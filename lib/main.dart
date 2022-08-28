@@ -2,9 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mvvm_project/app/services/authentication_service.dart';
-import 'package:flutter_mvvm_project/app/services/user_service.dart';
-import 'package:flutter_mvvm_project/app/views/authenticate.dart';
-import 'package:flutter_mvvm_project/app/views/home_screen.dart';
+import 'package:flutter_mvvm_project/app/services/database_service.dart';
+import 'package:flutter_mvvm_project/app/views/wrapper/authenticate.dart';
+import 'package:flutter_mvvm_project/app/views/home_screen/home_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
           create: (_) => AuthenticationService(),
         ),
         Provider(
-          create: (_) => UserService(),
+          create: (_) => DatabaseService(),
         ),
       ],
       child: MaterialApp(
