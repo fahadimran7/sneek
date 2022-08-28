@@ -89,11 +89,11 @@ class _BodyState extends State<Body> {
   }
 
   goToLoginScreen() {
-    Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(
-          builder: (_) => const Authenticate(),
-        ),
-        (Route<dynamic> route) => false);
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => const Authenticate(),
+      ),
+    );
   }
 }

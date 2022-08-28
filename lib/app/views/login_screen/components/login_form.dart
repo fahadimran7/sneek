@@ -79,9 +79,10 @@ class _LoginFormState extends State<LoginForm> {
               title: 'Login',
               onSubmitAction: () => onSubmitAction(authService),
               loading: loading),
+          const WhiteSpace(),
           TextButton(
             onPressed: widget.toggleView,
-            child: const Text('Register'),
+            child: const Text('Don\'t have an account? Register Now'),
           ),
           Text(
             error,

@@ -5,8 +5,8 @@ import 'package:flutter_mvvm_project/app/helpers/constants.dart';
 import 'package:flutter_mvvm_project/app/services/authentication_service.dart';
 import 'package:flutter_mvvm_project/app/services/database_service.dart';
 import 'package:flutter_mvvm_project/app/views/on_boarding/on_boarding_screen.dart';
-import 'package:flutter_mvvm_project/app/views/wrapper/authenticate.dart';
 import 'package:flutter_mvvm_project/app/views/home_screen/home_screen.dart';
+import 'package:flutter_mvvm_project/app/views/wrapper/authenticate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -58,7 +58,7 @@ class Layout extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.active) {
             final User? user = snapshot.data;
-            return user == null ? const OnBoarding() : const HomeScreen();
+            return user == null ? const Authenticate() : const HomeScreen();
           } else {
             return const Scaffold(
               body: Center(

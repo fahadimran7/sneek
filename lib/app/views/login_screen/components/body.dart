@@ -14,7 +14,7 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 50, left: 20, bottom: 10, right: 20),
+      padding: const EdgeInsets.only(top: 40, left: 20, bottom: 10, right: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
