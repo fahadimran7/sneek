@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mvvm_project/app/components/white_space.dart';
-
-import '../services/authentication_service.dart';
+import '../services/auth/authentication_service.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({

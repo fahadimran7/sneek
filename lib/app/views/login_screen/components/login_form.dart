@@ -5,7 +5,7 @@ import 'package:flutter_mvvm_project/app/helpers/validators.dart';
 import 'package:flutter_mvvm_project/app/views/home_screen/home_screen.dart';
 import 'package:provider/provider.dart';
 import '../../../components/white_space.dart';
-import '../../../services/authentication_service.dart';
+import '../../../services/auth/authentication_service.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({Key? key, this.toggleView}) : super(key: key);

@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mvvm_project/app/services/authentication_service.dart';
-import 'package:flutter_mvvm_project/app/services/database_service.dart';
+import 'package:flutter_mvvm_project/app/services/auth/authentication_service.dart';
+import 'package:flutter_mvvm_project/app/services/users/user_service.dart';
 import 'package:flutter_mvvm_project/app/views/products_screen/products_screen.dart';
 import 'package:provider/provider.dart';
 import '../../components/custom_drawer.dart';
@@ -17,10 +17,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final authService = context.watch<AuthenticationService>();
-    final databaseService = context.watch<DatabaseService>();
+    final userService = context.watch<UserService>();
     return SafeArea(
       child: FutureBuilder<DocumentSnapshot>(
-        future: databaseService.findUserById(
+        future: userService.findUserById(
           uid: authService.loggedInUser()!.uid,
         ),
         builder:

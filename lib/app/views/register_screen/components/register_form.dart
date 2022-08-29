@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mvvm_project/app/components/form_busy_button.dart';
 import 'package:flutter_mvvm_project/app/components/form_input_field.dart';
 import 'package:flutter_mvvm_project/app/helpers/validators.dart';
-import 'package:flutter_mvvm_project/app/services/database_service.dart';
+import 'package:flutter_mvvm_project/app/services/users/user_service.dart';
 import 'package:provider/provider.dart';
 import '../../../components/white_space.dart';
-import '../../../services/authentication_service.dart';
+import '../../../services/auth/authentication_service.dart';
 import '../../home_screen/home_screen.dart';
 
 class RegisterForm extends StatefulWidget {
@@ -88,7 +88,7 @@ class _RegisterFormState extends State<RegisterForm> {
   @override
   Widget build(BuildContext context) {
     final authService = context.watch<AuthenticationService>();
-    final databaseService = context.watch<DatabaseService>();
+    final userService = context.watch<UserService>();
 
     return Form(
       key: _formKey,
@@ -123,8 +123,7 @@ class _RegisterFormState extends State<RegisterForm> {
           ),
           FormBusyButton(
               title: 'Register',
-              onSubmitAction: () =>
-                  onSubmitAction(authService, databaseService),
+              onSubmitAction: () => onSubmitAction(authService, userService),
               loading: loading),
           const WhiteSpace(),
           TextButton(

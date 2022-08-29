@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mvvm_project/app/services/products/product_service.dart';
 import 'package:flutter_mvvm_project/app/views/products_screen/widgets/product_card.dart';
 
 import '../../../models/product_model.dart';
-import '../../../services/database_service.dart';
 
 class Body extends StatelessWidget {
   const Body({
     Key? key,
-    required this.databaseService,
+    required this.productService,
   }) : super(key: key);
 
-  final DatabaseService databaseService;
+  final ProductService productService;
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: databaseService.getProductsStream(),
+      stream: productService.getProductsStream(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
@@ -32,8 +32,8 @@ class Body extends StatelessWidget {
               gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                 maxCrossAxisExtent: 200,
                 mainAxisExtent: 313,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
+                crossAxisSpacing: 2,
+                mainAxisSpacing: 2,
               ),
               itemCount: products.length,
               itemBuilder: (BuildContext ctx, index) {

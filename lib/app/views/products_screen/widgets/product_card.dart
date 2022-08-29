@@ -19,7 +19,7 @@ class ProductCard extends StatelessWidget {
       ),
       elevation: 7,
       child: Padding(
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.all(8),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -30,7 +30,8 @@ class ProductCard extends StatelessWidget {
                 progressIndicatorBuilder: (context, url, downloadProgress) =>
                     Center(
                   child: CircularProgressIndicator(
-                      value: downloadProgress.progress),
+                    value: downloadProgress.progress,
+                  ),
                 ),
                 fit: BoxFit.cover,
                 width: double.infinity,

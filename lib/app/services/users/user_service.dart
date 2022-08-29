@@ -1,9 +1,8 @@
 import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_mvvm_project/app/models/product_model.dart';
-import '../models/user_model.dart';
+import '../../models/user_model.dart';
 
-class DatabaseService {
+class UserService {
   final _db = FirebaseFirestore.instance;
 
   static const usersPath = 'users/';
@@ -36,28 +35,6 @@ class DatabaseService {
       final user = UserModel.fromJson(snapshot.data());
       return user;
     });
-
-    return streamToPublish;
-  }
-
-  Stream<List<ProductModel>> getProductsStream() {
-    final productsStream = _db.collection(productsPath).snapshots();
-
-    final streamToPublish = productsStream.map(
-      (snapshot) {
-        final productsMap = snapshot.docs;
-
-        final productList = productsMap.map(
-          (product) {
-            return ProductModel.fromJson(
-              product.data(),
-            );
-          },
-        ).toList();
-
-        return productList;
-      },
-    );
 
     return streamToPublish;
   }
