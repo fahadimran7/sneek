@@ -2,8 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mvvm_project/app/models/cart_model.dart';
 import 'package:flutter_mvvm_project/app/services/cart/cart_service.dart';
-
-import 'widgets/body.dart';
+import 'components/body.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({
@@ -45,7 +44,10 @@ class CartScreen extends StatelessWidget {
                 backgroundColor: Colors.white,
                 elevation: 0,
               ),
-              body: Body(cartItems: cartItems),
+              body: (cartItems.isEmpty)
+                  ? const Center(
+                      child: Text('You haven\'t added any items in cart yet'))
+                  : Body(cartItems: cartItems),
             ),
           );
         } else if (snapshot.hasError) {

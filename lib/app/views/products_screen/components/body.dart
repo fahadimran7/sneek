@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mvvm_project/app/services/products/product_service.dart';
-import 'package:flutter_mvvm_project/app/views/products_screen/widgets/product_card.dart';
+import 'package:flutter_mvvm_project/app/views/products_screen/components/product_card.dart';
 
 import '../../../models/product_model.dart';
 

@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_mvvm_project/app/models/cart_model.dart';
-import 'package:flutter_mvvm_project/app/models/user_model.dart';
 
 class CartService {
   final _db = FirebaseFirestore.instance;

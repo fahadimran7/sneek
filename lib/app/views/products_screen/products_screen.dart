@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mvvm_project/app/services/products/product_service.dart';
 import 'package:provider/provider.dart';
-import 'widgets/body.dart';
+import 'components/body.dart';
 
 class ProductsScreen extends StatefulWidget {
   const ProductsScreen({Key? key}) : super(key: key);

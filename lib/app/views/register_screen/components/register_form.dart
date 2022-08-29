@@ -33,7 +33,7 @@ class _RegisterFormState extends State<RegisterForm> {
   }
 
   // Register Action
-  onSubmitAction(authService, databaseService) async {
+  onSubmitAction(authService, userService) async {
     // Form validates successfully
     if (_formKey.currentState!.validate()) {
       setState(() {
@@ -53,9 +53,10 @@ class _RegisterFormState extends State<RegisterForm> {
         });
       } else {
         // Add user document to Firestore
-        final savedUser = await databaseService.addUserToFirestore(
+        final savedUser = await userService.addUserToFirestore(
           email: emailController.text,
           name: nameController.text,
+          balance: 100,
           uid: user.uid,
         );
 

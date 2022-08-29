@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mvvm_project/app/components/white_space.dart';
 import '../services/auth/authentication_service.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -20,23 +21,26 @@ class CustomDrawer extends StatelessWidget {
             width: double.infinity,
             child: DrawerHeader(
               decoration: const BoxDecoration(color: Colors.black),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    data['name'],
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
+              child: Padding(
+                padding: const EdgeInsets.all(12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      data['name'],
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                      ),
                     ),
-                  ),
-                  Text(
-                    data['email'],
-                    style: const TextStyle(
-                      color: Colors.grey,
+                    Text(
+                      data['email'],
+                      style: const TextStyle(
+                        color: Colors.grey,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
@@ -50,6 +54,23 @@ class CustomDrawer extends StatelessWidget {
             title: const Text('Your Profile'),
             onTap: () {},
           ),
+          const Spacer(),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size.fromHeight(50),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(6),
+                ),
+              ),
+              onPressed: () => authService.logOut(),
+              child: const Text('Log out'),
+            ),
+          ),
+          const WhiteSpace(
+            size: 'xs',
+          )
         ],
       ),
     );
