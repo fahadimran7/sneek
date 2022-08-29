@@ -1,4 +1,5 @@
 class ProductModel {
+  String? id;
   String name;
   String description;
   num price;
@@ -6,6 +7,7 @@ class ProductModel {
   int quantity;
 
   ProductModel({
+    this.id,
     required this.name,
     required this.description,
     required this.quantity,
@@ -14,12 +16,15 @@ class ProductModel {
   });
 
   factory ProductModel.fromJson(data) {
+    final productId = data.id;
+    final product = data.data();
     return ProductModel(
-      name: data['name'] ?? 'New Product',
-      description: data['description'] ?? 'Not Provided',
-      quantity: data['quantity'] ?? 0,
-      imageUrl: data['imageUrl'] ?? '',
-      price: data['price'] ?? 0.0,
+      id: productId,
+      name: product['name'] ?? 'New Product',
+      description: product['description'] ?? 'Not Provided',
+      quantity: product['quantity'] ?? 0,
+      imageUrl: product['imageUrl'] ?? '',
+      price: product['price'] ?? 0.0,
     );
   }
 }

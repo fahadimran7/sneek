@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mvvm_project/app/services/auth/authentication_service.dart';
 import 'package:flutter_mvvm_project/app/services/users/user_service.dart';
+import 'package:flutter_mvvm_project/app/views/cart_screen/cart_screen.dart';
 import 'package:flutter_mvvm_project/app/views/products_screen/products_screen.dart';
 import 'package:provider/provider.dart';
 import '../../components/custom_drawer.dart';
@@ -54,7 +55,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 iconTheme: const IconThemeData(color: Colors.black),
                 actions: <Widget>[
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const CartScreen(),
+                        ),
+                      );
+                    },
                     icon: const Icon(
                       Icons.shopping_cart_outlined,
                       color: Colors.black,

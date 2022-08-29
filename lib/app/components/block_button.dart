@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
 class BlockButton extends StatelessWidget {
-  const BlockButton({Key? key, required this.onPressAction}) : super(key: key);
+  const BlockButton(
+      {Key? key, required this.onPressAction, required this.title})
+      : super(key: key);
+  final String title;
   final void Function()? onPressAction;
 
   @override
@@ -14,9 +17,9 @@ class BlockButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(6),
         ),
       ),
-      child: const Text(
-        'Continue',
-        style: TextStyle(
+      child: Text(
+        title,
+        style: const TextStyle(
           fontSize: 16,
           color: Colors.white,
         ),

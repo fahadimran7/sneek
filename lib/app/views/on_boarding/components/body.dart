@@ -63,7 +63,9 @@ class _BodyState extends State<Body> {
                       ),
                     ),
                     const Spacer(flex: 3),
-                    BlockButton(onPressAction: () => goToLoginScreen()),
+                    BlockButton(
+                        title: 'Continue',
+                        onPressAction: () => goToLoginScreen()),
                     const Spacer(),
                   ],
                 ),

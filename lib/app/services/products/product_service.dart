@@ -16,7 +16,7 @@ class ProductService {
         final productList = productsMap.map(
           (product) {
             return ProductModel.fromJson(
-              product.data(),
+              product,
             );
           },
         ).toList();

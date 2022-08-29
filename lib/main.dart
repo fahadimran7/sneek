@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mvvm_project/app/helpers/constants.dart';
 import 'package:flutter_mvvm_project/app/services/auth/authentication_service.dart';
+import 'package:flutter_mvvm_project/app/services/cart/cart_service.dart';
 import 'package:flutter_mvvm_project/app/services/products/product_service.dart';
 import 'package:flutter_mvvm_project/app/services/users/user_service.dart';
 import 'package:flutter_mvvm_project/app/views/on_boarding/on_boarding_screen.dart';
@@ -31,6 +32,9 @@ class MyApp extends StatelessWidget {
         ),
         Provider(
           create: (_) => ProductService(),
+        ),
+        Provider(
+          create: (_) => CartService(),
         ),
       ],
       child: MaterialApp(
