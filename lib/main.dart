@@ -5,6 +5,7 @@ import 'package:flutter_mvvm_project/app/helpers/constants.dart';
 import 'package:flutter_mvvm_project/app/services/auth/authentication_service.dart';
 import 'package:flutter_mvvm_project/app/services/cart/cart_service.dart';
 import 'package:flutter_mvvm_project/app/services/products/product_service.dart';
+import 'package:flutter_mvvm_project/app/services/toast/toast_service.dart';
 import 'package:flutter_mvvm_project/app/services/users/user_service.dart';
 import 'package:flutter_mvvm_project/app/views/on_boarding/on_boarding_screen.dart';
 import 'package:flutter_mvvm_project/app/views/home_screen/home_screen.dart';
@@ -35,6 +36,9 @@ class MyApp extends StatelessWidget {
         ),
         Provider(
           create: (_) => CartService(),
+        ),
+        Provider(
+          create: (_) => ToastService(),
         ),
       ],
       child: MaterialApp(

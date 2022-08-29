@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_mvvm_project/app/models/cart_model.dart';
 import 'package:flutter_mvvm_project/app/models/user_model.dart';
 
@@ -69,6 +70,18 @@ class CartService {
       return true;
     } catch (e) {
       return (e.toString());
+    }
+  }
+
+  Future<dynamic> removeItemFromCart(uid, itemId) async {
+    final docRef =
+        _db.collection(cartPath).doc(uid).collection('items').doc(itemId);
+    try {
+      await docRef.delete();
+
+      return true;
+    } catch (e) {
+      return e.toString();
     }
   }
 }

@@ -25,7 +25,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           return const Center(child: CircularProgressIndicator());
         }
 
-        return Text('${(snapshot.data as UserModel).name}');
+        return Text((snapshot.data as UserModel).name);
       },
     );
   }

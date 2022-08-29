@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mvvm_project/app/services/auth/authentication_service.dart';
 import 'package:flutter_mvvm_project/app/services/cart/cart_service.dart';
+import 'package:flutter_mvvm_project/app/services/toast/toast_service.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import '../../../components/white_space.dart';
@@ -19,6 +20,7 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final cartService = context.watch<CartService>();
     final authService = context.watch<AuthenticationService>();
+    final toastService = context.read<ToastService>();
     final uid = authService.loggedInUser()!.uid;
 
     return Card(
@@ -91,24 +93,13 @@ class ProductCard extends StatelessWidget {
                       );
 
                       if (res is bool) {
-                        Fluttertoast.showToast(
-                          msg: "Item added to your shopping cart",
-                          toastLength: Toast.LENGTH_SHORT,
-                          gravity: ToastGravity.BOTTOM,
-                          timeInSecForIosWeb: 1,
-                          backgroundColor: Colors.black,
-                          textColor: Colors.white,
-                          fontSize: 16.0,
+                        toastService.showToast(
+                          'Item added to your shopping cart',
                         );
                       } else {
-                        Fluttertoast.showToast(
-                            msg: "Unable to add item to shopping cart",
-                            toastLength: Toast.LENGTH_SHORT,
-                            gravity: ToastGravity.CENTER,
-                            timeInSecForIosWeb: 1,
-                            backgroundColor: Colors.red,
-                            textColor: Colors.white,
-                            fontSize: 16.0);
+                        toastService.showToast(
+                          'Unable to add item to your shopping cart',
+                        );
                       }
                     },
                   ),
