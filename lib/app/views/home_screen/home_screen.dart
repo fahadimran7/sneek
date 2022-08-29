@@ -19,74 +19,72 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final authService = context.watch<AuthenticationService>();
     final userService = context.watch<UserService>();
-    return SafeArea(
-      child: FutureBuilder<DocumentSnapshot>(
-        future: userService.findUserById(
-          uid: authService.loggedInUser()!.uid,
-        ),
-        builder:
-            (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-          if (snapshot.hasError) {
-            return const Scaffold(
-              body: Text('Something went wrong!'),
-            );
-          }
-
-          if (snapshot.hasData && !snapshot.data!.exists) {
-            return const Scaffold(
-              body: Text('Document does not exist!'),
-            );
-          }
-
-          if (snapshot.connectionState == ConnectionState.done) {
-            Map<String, dynamic> data =
-                snapshot.data!.data() as Map<String, dynamic>;
-            return Scaffold(
-              appBar: AppBar(
-                centerTitle: true,
-                title: const Text(
-                  'Sneek',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 24,
-                  ),
-                ),
-                iconTheme: const IconThemeData(color: Colors.black),
-                actions: <Widget>[
-                  IconButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => const CartScreen(),
-                        ),
-                      );
-                    },
-                    icon: const Icon(
-                      Icons.shopping_cart_outlined,
-                      color: Colors.black,
-                    ),
-                  )
-                ],
-                backgroundColor: Colors.white,
-                elevation: 0,
-              ),
-              drawer: CustomDrawer(
-                data: data,
-                authService: authService,
-              ),
-              body: const ProductsScreen(),
-            );
-          }
-
-          return const Scaffold(
-            body: Center(
-              child: CircularProgressIndicator(),
-            ),
-          );
-        },
+    return FutureBuilder<DocumentSnapshot>(
+      future: userService.findUserById(
+        uid: authService.loggedInUser()!.uid,
       ),
+      builder:
+          (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        if (snapshot.hasError) {
+          return const Scaffold(
+            body: Center(child: Text('Something went wrong!')),
+          );
+        }
+
+        if (snapshot.hasData && !snapshot.data!.exists) {
+          return const Scaffold(
+            body: Center(child: Text('Document does not exist!')),
+          );
+        }
+
+        if (snapshot.connectionState == ConnectionState.done) {
+          Map<String, dynamic> data =
+              snapshot.data!.data() as Map<String, dynamic>;
+          return Scaffold(
+            appBar: AppBar(
+              centerTitle: true,
+              title: const Text(
+                'Sneek',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 24,
+                ),
+              ),
+              iconTheme: const IconThemeData(color: Colors.black),
+              actions: <Widget>[
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const CartScreen(),
+                      ),
+                    );
+                  },
+                  icon: const Icon(
+                    Icons.shopping_cart_outlined,
+                    color: Colors.black,
+                  ),
+                )
+              ],
+              backgroundColor: Colors.white,
+              elevation: 0,
+            ),
+            drawer: CustomDrawer(
+              data: data,
+              authService: authService,
+            ),
+            body: const ProductsScreen(),
+          );
+        }
+
+        return const Scaffold(
+          body: Center(
+            child: CircularProgressIndicator(),
+          ),
+        );
+      },
     );
   }
 }

@@ -15,8 +15,6 @@ class _ProductsScreenState extends State<ProductsScreen> {
   Widget build(BuildContext context) {
     final productService = context.watch<ProductService>();
 
-    return Scaffold(
-      body: Body(productService: productService),
-    );
+    return Body(productService: productService);
   }
 }

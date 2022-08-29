@@ -22,7 +22,7 @@ class CustomDrawer extends StatelessWidget {
             child: DrawerHeader(
               decoration: const BoxDecoration(color: Colors.black),
               child: Padding(
-                padding: const EdgeInsets.all(12),
+                padding: const EdgeInsets.symmetric(horizontal: 12),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

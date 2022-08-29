@@ -28,27 +28,25 @@ class CartScreen extends StatelessWidget {
         if (snapshot.hasData) {
           final cartItems = snapshot.data as List<CartModel>;
 
-          return SafeArea(
-            child: Scaffold(
-              appBar: AppBar(
-                centerTitle: true,
-                title: const Text(
-                  'Your Shopping Cart',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 24,
-                  ),
+          return Scaffold(
+            appBar: AppBar(
+              centerTitle: true,
+              title: const Text(
+                'Your Shopping Cart',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 24,
                 ),
-                iconTheme: const IconThemeData(color: Colors.black),
-                backgroundColor: Colors.white,
-                elevation: 0,
               ),
-              body: (cartItems.isEmpty)
-                  ? const Center(
-                      child: Text('You haven\'t added any items in cart yet'))
-                  : Body(cartItems: cartItems),
+              iconTheme: const IconThemeData(color: Colors.black),
+              backgroundColor: Colors.white,
+              elevation: 0,
             ),
+            body: (cartItems.isEmpty)
+                ? const Center(
+                    child: Text('You haven\'t added any items in cart yet'))
+                : Body(cartItems: cartItems),
           );
         } else if (snapshot.hasError) {
           const SafeArea(

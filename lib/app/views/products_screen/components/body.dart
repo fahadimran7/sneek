@@ -40,7 +40,7 @@ class Body extends StatelessWidget {
                 return ProductCard(product: products[index]);
               });
         } else if (snapshot.hasError) {
-          const Text('Something went wrong!');
+          const Center(child: Text('Something went wrong!'));
         }
 
         return const Center(

@@ -4,6 +4,7 @@ import 'package:flutter_mvvm_project/app/components/white_space.dart';
 import 'package:flutter_mvvm_project/app/services/payment/payment_service.dart';
 import 'package:flutter_mvvm_project/app/services/toast/toast_service.dart';
 import 'package:flutter_mvvm_project/app/views/checkout_screen/components/virtual_card.dart';
+import 'package:flutter_mvvm_project/app/views/success_screen/success_screen.dart';
 import 'package:provider/provider.dart';
 
 class Body extends StatefulWidget {
@@ -76,6 +77,15 @@ class _BodyState extends State<Body> {
 
                 toastService.showToast(
                   'Payment completed successfully',
+                );
+
+                if (!mounted) return;
+
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(
+                    builder: (context) => const SuccessScreen(),
+                  ),
+                  (Route<dynamic> route) => false,
                 );
               }
             },
