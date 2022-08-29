@@ -17,7 +17,7 @@ class SplashContent extends StatelessWidget {
           flex: 1,
         ),
         const Text(
-          "SHOPIFY",
+          "SNEEK",
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,

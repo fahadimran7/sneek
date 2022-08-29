@@ -6,7 +6,6 @@ import 'package:flutter_mvvm_project/app/services/authentication_service.dart';
 import 'package:flutter_mvvm_project/app/services/database_service.dart';
 import 'package:flutter_mvvm_project/app/views/on_boarding/on_boarding_screen.dart';
 import 'package:flutter_mvvm_project/app/views/home_screen/home_screen.dart';
-import 'package:flutter_mvvm_project/app/views/wrapper/authenticate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 

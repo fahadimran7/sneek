@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mvvm_project/app/services/authentication_service.dart';
 import 'package:flutter_mvvm_project/app/services/database_service.dart';
 import 'package:flutter_mvvm_project/app/views/products_screen/products_screen.dart';
-import 'package:flutter_mvvm_project/app/views/profile_screen/profile_screen.dart';
-import 'package:flutter_mvvm_project/app/views/wrapper/authenticate.dart';
 import 'package:provider/provider.dart';
+import '../../components/custom_drawer.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -19,92 +18,66 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final authService = context.watch<AuthenticationService>();
     final databaseService = context.watch<DatabaseService>();
-    return Scaffold(
-      appBar: AppBar(title: const Text('Welcome')),
-      body: Center(
-        child: FutureBuilder<DocumentSnapshot>(
-            future: databaseService.findUserById(
-              uid: authService.loggedInUser()!.uid,
+    return SafeArea(
+      child: FutureBuilder<DocumentSnapshot>(
+        future: databaseService.findUserById(
+          uid: authService.loggedInUser()!.uid,
+        ),
+        builder:
+            (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+          if (snapshot.hasError) {
+            return const Scaffold(
+              body: Text('Something went wrong!'),
+            );
+          }
+
+          if (snapshot.hasData && !snapshot.data!.exists) {
+            return const Scaffold(
+              body: Text('Document does not exist!'),
+            );
+          }
+
+          if (snapshot.connectionState == ConnectionState.done) {
+            Map<String, dynamic> data =
+                snapshot.data!.data() as Map<String, dynamic>;
+            return Scaffold(
+              appBar: AppBar(
+                centerTitle: true,
+                title: const Text(
+                  'Sneek',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 24,
+                  ),
+                ),
+                iconTheme: const IconThemeData(color: Colors.black),
+                actions: <Widget>[
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.shopping_cart_outlined,
+                      color: Colors.black,
+                    ),
+                  )
+                ],
+                backgroundColor: Colors.white,
+                elevation: 0,
+              ),
+              drawer: CustomDrawer(
+                data: data,
+                authService: authService,
+              ),
+              body: const ProductsScreen(),
+            );
+          }
+
+          return const Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
             ),
-            builder: (BuildContext context,
-                AsyncSnapshot<DocumentSnapshot> snapshot) {
-              if (snapshot.hasError) {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text('Something went wrong!'),
-                    ElevatedButton(
-                      onPressed: () => authService.logOut(),
-                      child: const Text('Log out'),
-                    )
-                  ],
-                );
-              }
-
-              if (snapshot.hasData && !snapshot.data!.exists) {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text("Document does not exist"),
-                    ElevatedButton(
-                      onPressed: () => authService.logOut(),
-                      child: const Text('Log out'),
-                    )
-                  ],
-                );
-              }
-
-              if (snapshot.connectionState == ConnectionState.done) {
-                Map<String, dynamic> data =
-                    snapshot.data!.data() as Map<String, dynamic>;
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("Name: ${data['name']}"),
-                    ElevatedButton(
-                      onPressed: () async {
-                        await authService.logOut();
-
-                        if (!mounted) return;
-
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => const Authenticate(),
-                          ),
-                          (Route<dynamic> route) => false,
-                        );
-                      },
-                      child: const Text('Log out'),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => ProfileScreen(),
-                          ),
-                        );
-                      },
-                      child: Text('Profile'),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => ProductsScreen(),
-                          ),
-                        );
-                      },
-                      child: Text('Products'),
-                    )
-                  ],
-                );
-              }
-
-              return const CircularProgressIndicator();
-            }),
+          );
+        },
       ),
     );
   }

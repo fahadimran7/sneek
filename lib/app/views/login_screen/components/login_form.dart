@@ -86,15 +86,16 @@ class _LoginFormState extends State<LoginForm> {
             controller: passwordController,
             label: 'Password',
             validator: Validators.validatePassword,
-            obscureText: false,
+            obscureText: true,
           ),
           const WhiteSpace(
             size: 'md',
           ),
           FormBusyButton(
-              title: 'Login',
-              onSubmitAction: () => onSubmitAction(authService),
-              loading: loading),
+            title: 'Login',
+            onSubmitAction: () => onSubmitAction(authService),
+            loading: loading,
+          ),
           const WhiteSpace(),
           TextButton(
             onPressed: widget.toggleView,
