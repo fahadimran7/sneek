@@ -7,7 +7,7 @@ class AuthenticationService {
     return _auth.currentUser;
   }
 
-  dynamic signInWithEmailAndPassword(
+  Future<dynamic> signInWithEmailAndPassword(
       {required String email, required String password}) async {
     try {
       final user = await _auth.signInWithEmailAndPassword(
@@ -23,7 +23,7 @@ class AuthenticationService {
     }
   }
 
-  dynamic registerNewUser(
+  Future<dynamic> registerNewUser(
       {required String email, required String password}) async {
     try {
       final user = await _auth.createUserWithEmailAndPassword(
@@ -37,7 +37,12 @@ class AuthenticationService {
     }
   }
 
-  logOut() async {
-    await _auth.signOut();
+  Future<dynamic> logOut() async {
+    try {
+      await _auth.signOut();
+      return true;
+    } catch (e) {
+      return e.toString();
+    }
   }
 }

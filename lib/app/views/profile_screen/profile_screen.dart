@@ -5,6 +5,10 @@ import 'package:flutter_mvvm_project/app/services/auth/authentication_service.da
 import 'package:flutter_mvvm_project/app/services/users/user_service.dart';
 import 'package:provider/provider.dart';
 
+import '../../components/custom_drawer.dart';
+import '../cart_screen/cart_screen.dart';
+import 'components/body.dart';
+
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
 
@@ -22,10 +26,52 @@ class _ProfileScreenState extends State<ProfileScreen> {
       stream: userService.getUserInfo(authService.loggedInUser()!.uid),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        }
+          return const Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        } else {
+          final user = snapshot.data as UserModel;
 
-        return Text((snapshot.data as UserModel).name);
+          return Scaffold(
+            appBar: AppBar(
+              centerTitle: true,
+              title: const Text(
+                'Your Profile',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 24,
+                ),
+              ),
+              iconTheme: const IconThemeData(color: Colors.black),
+              actions: <Widget>[
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const CartScreen(),
+                      ),
+                    );
+                  },
+                  icon: const Icon(
+                    Icons.shopping_cart_outlined,
+                    color: Colors.black,
+                  ),
+                )
+              ],
+              backgroundColor: Colors.white,
+              elevation: 0,
+            ),
+            body: Body(
+              name: user.name,
+              email: user.email,
+              balance: user.balance.toString(),
+            ),
+          );
+        }
       },
     );
   }
