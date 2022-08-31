@@ -15,11 +15,11 @@ class _BodyState extends State<Body> {
   int currentPage = 0;
   List<Map<String, String>> splashData = [
     {
-      "text": "Experience the joy of shopping",
+      "text": "Experience the joy of running",
       "image": "assets/splash_1.png",
     },
-    {"text": "Browse tons of unique products", "image": "assets/splash_2.png"},
-    {"text": "We show the easy way to shop", "image": "assets/splash_3.png"},
+    {"text": "Easy order confirmations", "image": "assets/splash_2.png"},
+    {"text": "Pay as you like", "image": "assets/splash_3.png"},
   ];
 
   @override

@@ -24,6 +24,30 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   bool loading = false;
 
+  // Helpers
+  onSubmitAction(authService) async {
+    setState(() {
+      loading = true;
+    });
+
+    final res = await authService.logOut();
+
+    if (res is bool) {
+      if (!mounted) return;
+
+      setState(() {
+        loading = false;
+      });
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => const OnBoarding(),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final authService = context.read<AuthenticationService>();
@@ -41,30 +65,10 @@ class _BodyState extends State<Body> {
           _buildDetailsRow('Card', 'Standard Chartered'),
           const Spacer(),
           FormBusyButton(
-              onSubmitAction: () async {
-                setState(() {
-                  loading = true;
-                });
-
-                final res = await authService.logOut();
-
-                if (res is bool) {
-                  if (!mounted) return;
-
-                  setState(() {
-                    loading = false;
-                  });
-
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const OnBoarding(),
-                    ),
-                  );
-                }
-              },
-              loading: loading,
-              title: 'Log out')
+            onSubmitAction: () => onSubmitAction(authService),
+            loading: loading,
+            title: 'Log out',
+          )
         ],
       ),
     );
@@ -95,3 +99,5 @@ _buildDetailsRow(title, value) {
     ],
   );
 }
+
+onSubmitHandler() {}

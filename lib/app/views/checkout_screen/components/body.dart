@@ -25,6 +25,42 @@ class _BodyState extends State<Body> {
     final paymentService = context.read<PaymentService>();
     final toastService = context.read<ToastService>();
 
+    // Helpers
+    onSubmitAction() async {
+      setState(() {
+        loading = true;
+      });
+
+      final res = await paymentService.completePayment(widget.totalPrice);
+
+      if (res is! bool) {
+        setState(() {
+          loading = false;
+        });
+
+        toastService.showToast(
+          'Sorry your payment could not be completed',
+        );
+      } else {
+        setState(() {
+          loading = false;
+        });
+
+        toastService.showToast(
+          'Payment completed successfully',
+        );
+
+        if (!mounted) return;
+
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+            builder: (context) => const SuccessScreen(),
+          ),
+          (Route<dynamic> route) => false,
+        );
+      }
+    }
+
     return Padding(
       padding: const EdgeInsets.all(20),
       child: Column(
@@ -53,41 +89,7 @@ class _BodyState extends State<Body> {
           const Spacer(),
           PaymentButton(
             loading: loading,
-            onSubmitAction: () async {
-              setState(() {
-                loading = true;
-              });
-
-              final res =
-                  await paymentService.completePayment(widget.totalPrice);
-
-              if (res is! bool) {
-                setState(() {
-                  loading = false;
-                });
-
-                toastService.showToast(
-                  'Sorry your payment could not be completed',
-                );
-              } else {
-                setState(() {
-                  loading = false;
-                });
-
-                toastService.showToast(
-                  'Payment completed successfully',
-                );
-
-                if (!mounted) return;
-
-                Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(
-                    builder: (context) => const SuccessScreen(),
-                  ),
-                  (Route<dynamic> route) => false,
-                );
-              }
-            },
+            onSubmitAction: () => onSubmitAction(),
             title:
                 'Complete Payment (\$${widget.totalPrice.toStringAsFixed(2)})',
           )

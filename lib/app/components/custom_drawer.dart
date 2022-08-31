@@ -1,4 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mvvm_project/app/components/white_space.dart';
 import 'package:flutter_mvvm_project/app/views/payment_history_screen/payment_history_screen.dart';
 import 'package:flutter_mvvm_project/app/views/profile_screen/profile_screen.dart';
 import '../services/auth/authentication_service.dart';
@@ -21,12 +23,30 @@ class CustomDrawer extends StatelessWidget {
           SizedBox(
             width: double.infinity,
             child: DrawerHeader(
+              padding: EdgeInsets.zero,
               decoration: const BoxDecoration(color: Colors.black),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: Center(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(80.0),
+                      child: CachedNetworkImage(
+                        imageUrl:
+                            "https://cdn.dribbble.com/users/1338391/screenshots/15264109/media/1febee74f57d7d08520ddf66c1ff4c18.jpg",
+                        progressIndicatorBuilder:
+                            (context, url, downloadProgress) => Center(
+                          child: CircularProgressIndicator(
+                              value: downloadProgress.progress),
+                        ),
+                        fit: BoxFit.cover,
+                        width: 80,
+                        height: 80,
+                      ),
+                    ),
+                    const WhiteSpace(
+                      size: 'xs',
+                    ),
                     Text(
                       data['name'],
                       style: const TextStyle(

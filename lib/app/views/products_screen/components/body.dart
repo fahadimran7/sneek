@@ -39,13 +39,13 @@ _buildGridView(products) {
   return GridView.builder(
     padding: const EdgeInsets.symmetric(
       horizontal: 10,
-      vertical: 20,
+      vertical: 10,
     ),
     gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
       maxCrossAxisExtent: 200,
       mainAxisExtent: 313,
-      crossAxisSpacing: 2,
-      mainAxisSpacing: 2,
+      crossAxisSpacing: 1,
+      mainAxisSpacing: 1,
     ),
     itemCount: products.length,
     itemBuilder: (BuildContext ctx, index) {
