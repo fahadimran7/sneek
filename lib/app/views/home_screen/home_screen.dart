@@ -44,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
             appBar: AppBar(
               centerTitle: true,
               title: const Text(
-                'Sneek',
+                'SNEEK',
                 style: TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.bold,

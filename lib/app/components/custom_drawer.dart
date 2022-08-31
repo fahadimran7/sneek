@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mvvm_project/app/views/payment_history_screen/payment_history_screen.dart';
 import 'package:flutter_mvvm_project/app/views/profile_screen/profile_screen.dart';
 import '../services/auth/authentication_service.dart';
 
@@ -47,7 +48,14 @@ class CustomDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.history),
             title: const Text('Purchase History'),
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const PaymentHistory(),
+                ),
+              );
+            },
           ),
           ListTile(
             leading: const Icon(Icons.person),

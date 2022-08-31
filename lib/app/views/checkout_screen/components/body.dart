@@ -45,7 +45,7 @@ class _BodyState extends State<Body> {
           ),
           _buildItemsRow('Items', widget.items.toString()),
           const WhiteSpace(size: 'xs'),
-          _buildAmountRow('Sub Total', widget.totalPrice.toString()),
+          _buildAmountRow('Sub Total', widget.totalPrice.toStringAsFixed(2)),
           const WhiteSpace(size: 'xs'),
           _buildAmountRow('Shipping', '5.00'),
           const WhiteSpace(size: 'xs'),
