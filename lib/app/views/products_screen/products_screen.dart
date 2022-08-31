@@ -13,7 +13,7 @@ class ProductsScreen extends StatefulWidget {
 class _ProductsScreenState extends State<ProductsScreen> {
   @override
   Widget build(BuildContext context) {
-    final productService = context.watch<ProductService>();
+    final productService = context.read<ProductService>();
 
     return Body(productService: productService);
   }

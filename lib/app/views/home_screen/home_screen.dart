@@ -17,8 +17,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    final authService = context.watch<AuthenticationService>();
-    final userService = context.watch<UserService>();
+    final authService = context.read<AuthenticationService>();
+    final userService = context.read<UserService>();
     return FutureBuilder<DocumentSnapshot>(
       future: userService.findUserById(
         uid: authService.loggedInUser()!.uid,

@@ -4,8 +4,6 @@ import 'package:flutter_mvvm_project/app/models/user_model.dart';
 import 'package:flutter_mvvm_project/app/services/auth/authentication_service.dart';
 import 'package:flutter_mvvm_project/app/services/users/user_service.dart';
 import 'package:provider/provider.dart';
-
-import '../../components/custom_drawer.dart';
 import '../cart_screen/cart_screen.dart';
 import 'components/body.dart';
 
@@ -19,8 +17,8 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
-    final userService = context.watch<UserService>();
-    final authService = context.watch<AuthenticationService>();
+    final userService = context.read<UserService>();
+    final authService = context.read<AuthenticationService>();
 
     return StreamBuilder(
       stream: userService.getUserInfo(authService.loggedInUser()!.uid),

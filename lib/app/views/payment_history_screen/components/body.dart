@@ -44,7 +44,7 @@ class Body extends StatelessWidget {
                     style: const TextStyle(fontSize: 16),
                   ),
                   Text(
-                    '\$${details.price.toString()}',
+                    '\$${details.price.toStringAsFixed(2)}',
                     style: const TextStyle(fontSize: 16),
                   )
                 ],
@@ -68,7 +68,7 @@ class Body extends StatelessWidget {
                   style: TextStyle(fontSize: 16),
                 ),
                 Text(
-                  '\$${calculateTotalPrice(paymentsList).toString()}',
+                  '\$${calculateTotalPrice(paymentsList).toStringAsFixed(2)}',
                   style: const TextStyle(
                       fontWeight: FontWeight.bold, fontSize: 16),
                 ),

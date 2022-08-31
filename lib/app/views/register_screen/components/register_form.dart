@@ -88,8 +88,8 @@ class _RegisterFormState extends State<RegisterForm> {
 
   @override
   Widget build(BuildContext context) {
-    final authService = context.watch<AuthenticationService>();
-    final userService = context.watch<UserService>();
+    final authService = context.read<AuthenticationService>();
+    final userService = context.read<UserService>();
 
     return Form(
       key: _formKey,

@@ -7,7 +7,9 @@ import '../../../components/white_space.dart';
 class VirtualCard extends StatelessWidget {
   const VirtualCard({
     Key? key,
+    required this.title,
   }) : super(key: key);
+  final String title;
 
   @override
   Widget build(BuildContext context) {
@@ -34,10 +36,10 @@ class VirtualCard extends StatelessWidget {
             child: Column(
               children: [
                 Row(
-                  children: const [
+                  children: [
                     Text(
-                      'Standard Chartered',
-                      style: TextStyle(
+                      title,
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 20,
                         fontWeight: FontWeight.w500,

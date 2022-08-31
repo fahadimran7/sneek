@@ -25,14 +25,12 @@ class _BodyState extends State<Body> {
     final paymentService = context.read<PaymentService>();
     final toastService = context.read<ToastService>();
 
-    final totalPayable = widget.totalPrice + 8.00;
-
     return Padding(
       padding: const EdgeInsets.all(20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const VirtualCard(),
+          const VirtualCard(title: 'Standarad Chartered'),
           const WhiteSpace(
             size: 'lg',
           ),
@@ -47,11 +45,11 @@ class _BodyState extends State<Body> {
           const WhiteSpace(size: 'xs'),
           _buildAmountRow('Sub Total', widget.totalPrice.toStringAsFixed(2)),
           const WhiteSpace(size: 'xs'),
-          _buildAmountRow('Shipping', '5.00'),
+          _buildAmountRow('Shipping', '0.00'),
           const WhiteSpace(size: 'xs'),
-          _buildAmountRow('Estimated Tax', '3.00'),
+          _buildAmountRow('Estimated Tax', '0.00'),
           const WhiteSpace(size: 'xs'),
-          _buildAmountRow('Total', totalPayable.toStringAsFixed(2)),
+          _buildAmountRow('Total', widget.totalPrice.toStringAsFixed(2)),
           const Spacer(),
           PaymentButton(
             loading: loading,
@@ -60,7 +58,8 @@ class _BodyState extends State<Body> {
                 loading = true;
               });
 
-              final res = await paymentService.completePayment(totalPayable);
+              final res =
+                  await paymentService.completePayment(widget.totalPrice);
 
               if (res is! bool) {
                 setState(() {
@@ -89,7 +88,8 @@ class _BodyState extends State<Body> {
                 );
               }
             },
-            title: 'Complete Payment (\$${totalPayable.toStringAsFixed(2)})',
+            title:
+                'Complete Payment (\$${widget.totalPrice.toStringAsFixed(2)})',
           )
         ],
       ),

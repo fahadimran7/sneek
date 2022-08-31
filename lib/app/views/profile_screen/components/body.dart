@@ -32,7 +32,7 @@ class _BodyState extends State<Body> {
       padding: const EdgeInsets.all(20),
       child: Column(
         children: [
-          const VirtualCard(),
+          const VirtualCard(title: 'Your Balance'),
           const WhiteSpace(size: 'md'),
           _buildDetailsRow('Name', widget.name),
           const WhiteSpace(size: 'sm'),
@@ -87,7 +87,7 @@ _buildDetailsRow(title, value) {
           Text(
             value,
             style: const TextStyle(
-              fontSize: 19,
+              fontSize: 17,
             ),
           )
         ],

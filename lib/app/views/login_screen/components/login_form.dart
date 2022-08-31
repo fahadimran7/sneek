@@ -67,7 +67,7 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
-    final authService = context.watch<AuthenticationService>();
+    final authService = context.read<AuthenticationService>();
 
     return Form(
       key: _formKey,

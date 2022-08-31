@@ -31,8 +31,6 @@ class PaymentService {
 
     // complete payment and update the balance
     try {
-      await _db.collection(usersPath).doc(uid).update({'balance': newBalance});
-
       // add cart items to purchased items
       final purchasedItemsRef =
           _db.collection(purchasedPath).doc(uid).collection('items');
@@ -43,23 +41,22 @@ class PaymentService {
       final snapshots = await collection.get();
 
       for (var doc in snapshots.docs) {
-        await purchasedItemsRef.doc().set(doc.data());
+        await purchasedItemsRef.doc(doc.id).set(doc.data());
         await doc.reference.delete();
-      }
 
-      final purchasedSnapshots = await purchasedItemsRef.get();
+        final purchasedSnapshots = await purchasedItemsRef.doc(doc.id).get();
 
-      for (var snapshot in purchasedSnapshots.docs) {
-        paymentsItemsRef.add(snapshot.reference);
+        paymentsItemsRef.add(purchasedSnapshots.reference);
       }
 
       // add itemRef list to payments
-      await _db
-          .collection(paymentsPath)
-          .doc(uid)
-          .collection('history')
-          .doc()
-          .set({'items': paymentsItemsRef});
+      await _db.collection(paymentsPath).doc(uid).collection('history').add({
+        'items': paymentsItemsRef,
+        'timestamp': DateTime.now().microsecondsSinceEpoch
+      });
+
+      // Update balance
+      await _db.collection(usersPath).doc(uid).update({'balance': newBalance});
 
       return true;
     } catch (e) {
@@ -70,8 +67,12 @@ class PaymentService {
   Stream<Future<List<PaymentModel>>> getPaymentHistoryForUser(uid) {
     final List<PaymentModel> paymentModelList = [];
 
-    final paymentStream =
-        _db.collection(paymentsPath).doc(uid).collection('history').snapshots();
+    final paymentStream = _db
+        .collection(paymentsPath)
+        .doc(uid)
+        .collection('history')
+        .orderBy('timestamp', descending: true)
+        .snapshots();
 
     final streamToPublish = paymentStream.map(
       (snapshot) async {
@@ -91,7 +92,7 @@ class PaymentService {
             final cartItem = await _db
                 .collection(purchasedPath)
                 .doc(uid)
-                .collection('history')
+                .collection('items')
                 .doc(cartItemRef)
                 .get();
 

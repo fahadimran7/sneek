@@ -17,8 +17,8 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cartService = context.watch<CartService>();
-    final authService = context.watch<AuthenticationService>();
+    final cartService = context.read<CartService>();
+    final authService = context.read<AuthenticationService>();
     final toastService = context.read<ToastService>();
     final uid = authService.loggedInUser()!.uid;
 

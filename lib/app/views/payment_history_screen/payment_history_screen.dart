@@ -33,12 +33,12 @@ class PaymentHistory extends StatelessWidget {
                 return const Scaffold(
                   body: Center(child: CircularProgressIndicator()),
                 );
-              } else if (snapshot.hasData) {
+              } else if ((snapshot.data as List<PaymentModel>).isNotEmpty) {
                 return Scaffold(
                   appBar: AppBar(
                     centerTitle: true,
                     title: const Text(
-                      'Payment History',
+                      'Purchase History',
                       style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
@@ -49,7 +49,9 @@ class PaymentHistory extends StatelessWidget {
                     backgroundColor: Colors.white,
                     elevation: 0,
                   ),
-                  body: Body(paymentItem: snapshot.data as List<PaymentModel>),
+                  body: SingleChildScrollView(
+                      child: Body(
+                          paymentItem: snapshot.data as List<PaymentModel>)),
                 );
               }
 
