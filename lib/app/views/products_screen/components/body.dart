@@ -29,7 +29,7 @@ class Body extends StatelessWidget {
         } else if (snapshot.hasError) {
           return const AppError();
         }
-        return const AppNoRecords();
+        return const AppNoRecords(message: 'No products to show');
       },
     );
   }

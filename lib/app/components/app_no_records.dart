@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
 class AppNoRecords extends StatelessWidget {
-  const AppNoRecords({Key? key}) : super(key: key);
+  const AppNoRecords({Key? key, required this.message}) : super(key: key);
+  final String message;
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('No records to show!'),
+    return Center(
+      child: Text(message),
     );
   }
 }

@@ -11,96 +11,58 @@ class Body extends StatelessWidget {
     List<Widget> listOfCards = [];
 
     for (var item in paymentItem) {
-      List<Widget> listOfRows = [];
+      final paymentsList = item.paymentItemsList;
 
-      final paymentsList = (item).paymentItemsList;
-
-      listOfRows = [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Text(
-              'ITEMS',
-              style: TextStyle(color: Colors.black54),
-            ),
-            Text(
-              'x${calculateItemCount(paymentsList).toString()}',
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-          ],
-        ),
-        const WhiteSpace(size: 'sm')
+      // Add Header Row
+      List<Widget> listOfRows = [
+        _buildDetailsRowWithSpace(
+          name: 'ITEMS',
+          value: _calculateItemCount(paymentsList),
+          isHeader: true,
+        )
       ];
 
+      // Create item detail rows
       for (var details in paymentsList) {
         listOfRows.add(
-          Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    '${details.name} (x${details.quantity})',
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                  Text(
-                    '\$${details.price.toStringAsFixed(2)}',
-                    style: const TextStyle(fontSize: 16),
-                  )
-                ],
-              ),
-              const WhiteSpace(
-                size: 'xs',
-              )
-            ],
+          _buildDetailsRowWithSpace(
+            name: details.name,
+            quantity: details.quantity,
+            value: details.price,
           ),
         );
       }
 
+      // Create trailing row
       listOfRows.add(
-        Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'Total',
-                  style: TextStyle(fontSize: 16),
-                ),
-                Text(
-                  '\$${calculateTotalPrice(paymentsList).toStringAsFixed(2)}',
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 16),
-                ),
-              ],
-            ),
-            const WhiteSpace(size: 'sm'),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: const [
-                Text(
-                  'Succeeded',
-                  style: TextStyle(
-                    color: Colors.green,
-                  ),
-                )
-              ],
-            )
-          ],
+        _buildDetailsRowWithSpace(
+          name: 'Total',
+          value: _calculateTotalPrice(paymentsList),
+          isTrailing: true,
         ),
       );
 
+      // Add Rows inside Card
       listOfCards.add(
-        Card(
-          elevation: 6,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
-            child: Column(children: listOfRows),
-          ),
+        Column(
+          children: [
+            Card(
+              elevation: 6,
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+                child: Column(children: listOfRows),
+              ),
+            ),
+            const WhiteSpace(
+              size: 'xs',
+            ),
+          ],
         ),
       );
     }
 
+    // Display list of cards
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       child: Column(children: listOfCards),
@@ -108,7 +70,8 @@ class Body extends StatelessWidget {
   }
 }
 
-calculateTotalPrice(paymentsList) {
+// Helpers
+_calculateTotalPrice(paymentsList) {
   num totalPrice = 0;
 
   for (var item in paymentsList) {
@@ -118,7 +81,7 @@ calculateTotalPrice(paymentsList) {
   return totalPrice;
 }
 
-calculateItemCount(paymentsList) {
+_calculateItemCount(paymentsList) {
   num itemCount = 0;
 
   for (var item in paymentsList) {
@@ -126,4 +89,42 @@ calculateItemCount(paymentsList) {
   }
 
   return itemCount;
+}
+
+Widget _buildDetailsRowWithSpace(
+    {required name, required value, isHeader, isTrailing, quantity}) {
+  return Column(
+    children: [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            '$name ${quantity != null ? '(x$quantity)' : ''}',
+            style: isHeader != null && isHeader
+                ? const TextStyle(fontSize: 16, color: Colors.black54)
+                : const TextStyle(fontSize: 16),
+          ),
+          isHeader != null && isHeader
+              ? Text('x${value.toString()}')
+              : Text(
+                  '\$${value.toStringAsFixed(2)}',
+                  style: const TextStyle(fontSize: 16),
+                )
+        ],
+      ),
+      const WhiteSpace(
+        size: 'xs',
+      ),
+      if (isTrailing != null && isTrailing)
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: const [
+            Text(
+              'Successful',
+              style: TextStyle(color: Colors.green),
+            )
+          ],
+        )
+    ],
+  );
 }
