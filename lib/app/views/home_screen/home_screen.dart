@@ -40,43 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
         if (snapshot.connectionState == ConnectionState.done) {
           Map<String, dynamic> data =
               snapshot.data!.data() as Map<String, dynamic>;
-          return Scaffold(
-            appBar: AppBar(
-              centerTitle: true,
-              title: const Text(
-                'SNEEK',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 24,
-                ),
-              ),
-              iconTheme: const IconThemeData(color: Colors.black),
-              actions: <Widget>[
-                IconButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => const CartScreen(),
-                      ),
-                    );
-                  },
-                  icon: const Icon(
-                    Icons.shopping_cart_outlined,
-                    color: Colors.black,
-                  ),
-                )
-              ],
-              backgroundColor: Colors.white,
-              elevation: 0,
-            ),
-            drawer: CustomDrawer(
-              data: data,
-              authService: authService,
-            ),
-            body: const ProductsScreen(),
-          );
+          return ProductsScreen(data: data);
         }
 
         return const Scaffold(

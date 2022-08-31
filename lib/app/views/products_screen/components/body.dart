@@ -1,52 +1,55 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mvvm_project/app/services/products/product_service.dart';
+import 'package:flutter_mvvm_project/app/components/app_error.dart';
+import 'package:flutter_mvvm_project/app/components/app_loading.dart';
+import 'package:flutter_mvvm_project/app/components/app_no_records.dart';
+import 'package:flutter_mvvm_project/app/view_models/product_view_model.dart';
 import 'package:flutter_mvvm_project/app/views/products_screen/components/product_card.dart';
-
+import 'package:provider/provider.dart';
 import '../../../models/product_model.dart';
 
 class Body extends StatelessWidget {
   const Body({
     Key? key,
-    required this.productService,
   }) : super(key: key);
-
-  final ProductService productService;
 
   @override
   Widget build(BuildContext context) {
+    ProductViewModel productViewModel = context.watch<ProductViewModel>();
+
     return StreamBuilder(
-      stream: productService.getProductsStream(),
+      stream: productViewModel.getProductsList(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
+          return const AppLoading();
         }
 
         if (snapshot.hasData) {
           final products = snapshot.data as List<ProductModel>;
-
-          return GridView.builder(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 10,
-                vertical: 20,
-              ),
-              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 200,
-                mainAxisExtent: 313,
-                crossAxisSpacing: 2,
-                mainAxisSpacing: 2,
-              ),
-              itemCount: products.length,
-              itemBuilder: (BuildContext ctx, index) {
-                return ProductCard(product: products[index]);
-              });
+          return _buildGridView(products);
         } else if (snapshot.hasError) {
-          const Center(child: Text('Something went wrong!'));
+          return const AppError();
         }
-
-        return const Center(
-          child: Text('No records to show!'),
-        );
+        return const AppNoRecords();
       },
     );
   }
+}
+
+_buildGridView(products) {
+  return GridView.builder(
+    padding: const EdgeInsets.symmetric(
+      horizontal: 10,
+      vertical: 20,
+    ),
+    gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+      maxCrossAxisExtent: 200,
+      mainAxisExtent: 313,
+      crossAxisSpacing: 2,
+      mainAxisSpacing: 2,
+    ),
+    itemCount: products.length,
+    itemBuilder: (BuildContext ctx, index) {
+      return ProductCard(product: products[index]);
+    },
+  );
 }
