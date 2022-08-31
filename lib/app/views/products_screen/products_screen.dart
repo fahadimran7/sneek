@@ -20,7 +20,10 @@ class _ProductsScreenState extends State<ProductsScreen> {
     final authService = context.read<AuthenticationService>();
 
     return Scaffold(
-      appBar: const CustomAppBar(),
+      appBar: const CustomAppBar(
+        title: 'SNEEK',
+        enableActions: true,
+      ),
       drawer: CustomDrawer(
         data: widget.data,
         authService: authService,

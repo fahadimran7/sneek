@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mvvm_project/app/components/custom_app_bar.dart';
 import 'package:flutter_mvvm_project/app/models/cart_model.dart';
 import 'package:flutter_mvvm_project/app/services/cart/cart_service.dart';
 import 'components/body.dart';
@@ -29,20 +30,8 @@ class CartScreen extends StatelessWidget {
           final cartItems = snapshot.data as List<CartModel>;
 
           return Scaffold(
-            appBar: AppBar(
-              centerTitle: true,
-              title: const Text(
-                'Your Shopping Cart',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 24,
-                ),
-              ),
-              iconTheme: const IconThemeData(color: Colors.black),
-              backgroundColor: Colors.white,
-              elevation: 0,
-            ),
+            appBar: const CustomAppBar(
+                title: 'Shopping Cart', enableActions: false),
             body: (cartItems.isEmpty)
                 ? const Center(
                     child: Text('You haven\'t added any items in cart yet'))

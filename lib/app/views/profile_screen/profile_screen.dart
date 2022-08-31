@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mvvm_project/app/components/custom_app_bar.dart';
 import 'package:flutter_mvvm_project/app/models/user_model.dart';
 import 'package:flutter_mvvm_project/app/services/auth/authentication_service.dart';
 import 'package:flutter_mvvm_project/app/services/users/user_service.dart';
@@ -33,36 +34,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           final user = snapshot.data as UserModel;
 
           return Scaffold(
-            appBar: AppBar(
-              centerTitle: true,
-              title: const Text(
-                'Your Profile',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 24,
-                ),
-              ),
-              iconTheme: const IconThemeData(color: Colors.black),
-              actions: <Widget>[
-                IconButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => const CartScreen(),
-                      ),
-                    );
-                  },
-                  icon: const Icon(
-                    Icons.shopping_cart_outlined,
-                    color: Colors.black,
-                  ),
-                )
-              ],
-              backgroundColor: Colors.white,
-              elevation: 0,
-            ),
+            appBar:
+                const CustomAppBar(title: 'Your Profile', enableActions: true),
             body: Body(
               name: user.name,
               email: user.email,

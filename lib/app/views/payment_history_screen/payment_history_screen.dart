@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mvvm_project/app/components/custom_app_bar.dart';
 import 'package:flutter_mvvm_project/app/models/payment_model.dart';
 import 'package:flutter_mvvm_project/app/services/payment/payment_service.dart';
 import 'components/body.dart';
@@ -35,42 +36,20 @@ class PaymentHistory extends StatelessWidget {
                 );
               } else if ((snapshot.data as List<PaymentModel>).isNotEmpty) {
                 return Scaffold(
-                  appBar: AppBar(
-                    centerTitle: true,
-                    title: const Text(
-                      'Purchase History',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 24,
-                      ),
-                    ),
-                    iconTheme: const IconThemeData(color: Colors.black),
-                    backgroundColor: Colors.white,
-                    elevation: 0,
-                  ),
+                  appBar: const CustomAppBar(
+                      title: 'Purchase History', enableActions: false),
                   body: SingleChildScrollView(
                       child: Body(
                           paymentItem: snapshot.data as List<PaymentModel>)),
                 );
               }
 
-              return Scaffold(
-                appBar: AppBar(
-                  centerTitle: true,
-                  title: const Text(
-                    'Purchase History',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 24,
-                    ),
-                  ),
-                  iconTheme: const IconThemeData(color: Colors.black),
-                  backgroundColor: Colors.white,
-                  elevation: 0,
+              return const Scaffold(
+                appBar: CustomAppBar(
+                  title: 'Purchase History',
+                  enableActions: false,
                 ),
-                body: const Center(
+                body: Center(
                   child: Text('No purchase history items to show'),
                 ),
               );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mvvm_project/app/components/custom_app_bar.dart';
 
 import 'components/body.dart';
 
@@ -14,20 +15,7 @@ class CheckoutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text(
-          'Checkout',
-          style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-            fontSize: 24,
-          ),
-        ),
-        iconTheme: const IconThemeData(color: Colors.black),
-        backgroundColor: Colors.white,
-        elevation: 0,
-      ),
+      appBar: const CustomAppBar(title: 'Checkout', enableActions: false),
       body: Body(totalPrice: totalPrice, items: items),
     );
   }
