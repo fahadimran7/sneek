@@ -2,16 +2,19 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mvvm_project/app/helpers/constants.dart';
+import 'package:flutter_mvvm_project/app/routes/routing_constants.dart';
 import 'package:flutter_mvvm_project/app/services/auth/authentication_service.dart';
 import 'package:flutter_mvvm_project/app/services/cart/cart_service.dart';
 import 'package:flutter_mvvm_project/app/services/payment/payment_service.dart';
 import 'package:flutter_mvvm_project/app/services/toast/toast_service.dart';
 import 'package:flutter_mvvm_project/app/services/users/user_service.dart';
-import 'package:flutter_mvvm_project/app/view_models/product_view_model.dart';
 import 'package:flutter_mvvm_project/app/views/on_boarding/on_boarding_screen.dart';
 import 'package:flutter_mvvm_project/app/views/home_screen/home_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'app/routes/router.dart' as router;
+
+import 'app/view_models/product_viewmodel.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -48,6 +51,8 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
+        onGenerateRoute: router.generateRoute,
+        initialRoute: homeViewRoute,
         theme: ThemeData(
           primarySwatch: primaryBlack,
           scaffoldBackgroundColor: const Color.fromARGB(255, 255, 255, 255),
@@ -55,7 +60,6 @@ class MyApp extends StatelessWidget {
             Theme.of(context).textTheme,
           ),
         ),
-        home: const Layout(),
       ),
     );
   }

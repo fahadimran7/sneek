@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mvvm_project/app/components/form_busy_button.dart';
-import 'package:flutter_mvvm_project/app/components/form_input_field.dart';
+import 'package:flutter_mvvm_project/app/components/forms/form_busy_button.dart';
+import 'package:flutter_mvvm_project/app/components/forms/form_input_field.dart';
 import 'package:flutter_mvvm_project/app/helpers/validators.dart';
+import 'package:flutter_mvvm_project/app/routes/routing_constants.dart';
 import 'package:flutter_mvvm_project/app/services/users/user_service.dart';
 import 'package:provider/provider.dart';
-import '../../../components/white_space.dart';
+import '../../../components/globals/white_space.dart';
 import '../../../services/auth/authentication_service.dart';
-import '../../home_screen/home_screen.dart';
 
 class RegisterForm extends StatefulWidget {
-  const RegisterForm({Key? key, this.toggleView}) : super(key: key);
-  final void Function()? toggleView;
+  const RegisterForm({Key? key}) : super(key: key);
 
   @override
   State<RegisterForm> createState() => _RegisterFormState();
@@ -74,13 +73,8 @@ class _RegisterFormState extends State<RegisterForm> {
 
           if (!mounted) return;
 
-          Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(
-              builder: (_) => const HomeScreen(),
-            ),
-            (Route<dynamic> route) => false,
-          );
+          Navigator.pushNamedAndRemoveUntil(
+              context, homeViewRoute, (route) => false);
         }
       }
     }
@@ -128,7 +122,9 @@ class _RegisterFormState extends State<RegisterForm> {
               loading: loading),
           const WhiteSpace(),
           TextButton(
-            onPressed: widget.toggleView,
+            onPressed: () {
+              Navigator.pushNamed(context, loginViewRoute);
+            },
             child: const Text('Already have an account? Login'),
           ),
           Text(

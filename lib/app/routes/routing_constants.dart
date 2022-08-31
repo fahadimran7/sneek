@@ -1,0 +1,10 @@
+const String homeViewRoute = '/';
+const String productViewRoute = '/home';
+const String loginViewRoute = '/login';
+const String registerViewRoute = '/register';
+const String onBoardingViewRoute = '/on-boarding';
+const String cartViewRoute = '/cart';
+const String purchaseHistoryViewRoute = '/purchase-history';
+const String profileViewRoute = '/profile';
+const String checkoutViewRoute = '/checkout';
+const String authenticateViewRoute = '/authenticate';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mvvm_project/app/components/white_space.dart';
+import 'package:flutter_mvvm_project/app/components/globals/white_space.dart';
 import '../../../models/payment_model.dart';
 
 class Body extends StatelessWidget {
@@ -100,22 +100,27 @@ Widget _buildDetailsRowWithSpace(
         children: [
           Text(
             '$name ${quantity != null ? '(x$quantity)' : ''}',
-            style: isHeader != null && isHeader
+            style: isHeader ?? false
                 ? const TextStyle(fontSize: 16, color: Colors.black54)
-                : const TextStyle(fontSize: 16),
+                : isTrailing ?? false
+                    ? const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)
+                    : const TextStyle(fontSize: 16),
           ),
-          isHeader != null && isHeader
+          isHeader ?? false
               ? Text('x${value.toString()}')
               : Text(
                   '\$${value.toStringAsFixed(2)}',
-                  style: const TextStyle(fontSize: 16),
-                )
+                  style: isTrailing ?? false
+                      ? const TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.bold)
+                      : const TextStyle(fontSize: 16),
+                ),
         ],
       ),
       const WhiteSpace(
         size: 'xs',
       ),
-      if (isTrailing != null && isTrailing)
+      if (isTrailing ?? false)
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: const [

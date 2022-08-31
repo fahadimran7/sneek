@@ -1,11 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mvvm_project/app/components/app_error.dart';
-import 'package:flutter_mvvm_project/app/components/app_loading.dart';
-import 'package:flutter_mvvm_project/app/components/app_no_records.dart';
-import 'package:flutter_mvvm_project/app/components/custom_app_bar.dart';
+import 'package:flutter_mvvm_project/app/components/globals/app_error.dart';
+import 'package:flutter_mvvm_project/app/components/globals/app_loading.dart';
+import 'package:flutter_mvvm_project/app/components/globals/app_no_records.dart';
 import 'package:flutter_mvvm_project/app/models/payment_model.dart';
 import 'package:flutter_mvvm_project/app/services/payment/payment_service.dart';
+import '../../components/globals/custom_app_bar.dart';
 import 'components/body.dart';
 
 class PaymentHistory extends StatelessWidget {

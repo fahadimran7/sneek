@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mvvm_project/app/components/app_error.dart';
-import 'package:flutter_mvvm_project/app/components/app_loading.dart';
-import 'package:flutter_mvvm_project/app/components/app_no_records.dart';
-import 'package:flutter_mvvm_project/app/view_models/product_view_model.dart';
+import 'package:flutter_mvvm_project/app/components/globals/app_error.dart';
+import 'package:flutter_mvvm_project/app/components/globals/app_loading.dart';
+import 'package:flutter_mvvm_project/app/components/globals/app_no_records.dart';
 import 'package:flutter_mvvm_project/app/views/products_screen/components/product_card.dart';
 import 'package:provider/provider.dart';
 import '../../../models/product_model.dart';
+import '../../../view_models/product_viewmodel.dart';
 
 class Body extends StatelessWidget {
   const Body({

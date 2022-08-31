@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mvvm_project/app/components/block_button.dart';
-import 'package:flutter_mvvm_project/app/components/white_space.dart';
-import 'package:flutter_mvvm_project/app/views/home_screen/home_screen.dart';
+import 'package:flutter_mvvm_project/app/components/buttons/block_button.dart';
+import 'package:flutter_mvvm_project/app/components/globals/white_space.dart';
+import 'package:flutter_mvvm_project/app/routes/routing_constants.dart';
 
 class Body extends StatelessWidget {
   const Body({Key? key}) : super(key: key);
@@ -29,12 +29,7 @@ class Body extends StatelessWidget {
           padding: const EdgeInsets.all(20),
           child: BlockButton(
             onPressAction: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => const HomeScreen(),
-                ),
-              );
+              Navigator.pushNamed(context, productViewRoute);
             },
             title: 'Browse Products',
           ),

@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mvvm_project/app/components/app_error.dart';
-import 'package:flutter_mvvm_project/app/components/app_loading.dart';
-import 'package:flutter_mvvm_project/app/components/app_no_records.dart';
+import 'package:flutter_mvvm_project/app/components/globals/app_error.dart';
+import 'package:flutter_mvvm_project/app/components/globals/app_loading.dart';
+import 'package:flutter_mvvm_project/app/components/globals/app_no_records.dart';
 import 'package:flutter_mvvm_project/app/services/auth/authentication_service.dart';
 import 'package:flutter_mvvm_project/app/services/users/user_service.dart';
 import 'package:flutter_mvvm_project/app/views/products_screen/products_screen.dart';

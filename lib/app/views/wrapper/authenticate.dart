@@ -12,16 +12,10 @@ class Authenticate extends StatefulWidget {
 class _AuthenticateState extends State<Authenticate> {
   bool showLogInScreen = true;
 
-  void toggleView() {
-    setState(() {
-      showLogInScreen = !showLogInScreen;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    if (showLogInScreen) return LoginScreen(toggleView: toggleView);
+    if (showLogInScreen) return const LoginScreen();
 
-    return RegisterScreen(toggleView: toggleView);
+    return const RegisterScreen();
   }
 }

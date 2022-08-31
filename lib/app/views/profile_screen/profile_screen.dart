@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mvvm_project/app/components/app_loading.dart';
-import 'package:flutter_mvvm_project/app/components/custom_app_bar.dart';
+import 'package:flutter_mvvm_project/app/components/globals/app_loading.dart';
 import 'package:flutter_mvvm_project/app/models/user_model.dart';
 import 'package:flutter_mvvm_project/app/services/auth/authentication_service.dart';
 import 'package:flutter_mvvm_project/app/services/users/user_service.dart';
 import 'package:provider/provider.dart';
+import '../../components/globals/custom_app_bar.dart';
 import 'components/body.dart';
 
 class ProfileScreen extends StatefulWidget {

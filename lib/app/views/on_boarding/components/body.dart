@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mvvm_project/app/routes/routing_constants.dart';
 import 'package:flutter_mvvm_project/app/views/on_boarding/components/on_boarding_content.dart';
-import 'package:flutter_mvvm_project/app/views/wrapper/authenticate.dart';
 
-import '../../../components/block_button.dart';
+import '../../../components/buttons/block_button.dart';
 
 class Body extends StatefulWidget {
   const Body({Key? key}) : super(key: key);
@@ -91,11 +91,6 @@ class _BodyState extends State<Body> {
   }
 
   goToLoginScreen() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => const Authenticate(),
-      ),
-    );
+    Navigator.pushNamed(context, authenticateViewRoute);
   }
 }

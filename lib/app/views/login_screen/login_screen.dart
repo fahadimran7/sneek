@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'components/body.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key, required this.toggleView}) : super(key: key);
-  final void Function()? toggleView;
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -15,10 +14,10 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-      child: Scaffold(
+      child: const Scaffold(
         body: SingleChildScrollView(
           child: SafeArea(
-            child: Body(toggleView: widget.toggleView),
+            child: Body(),
           ),
         ),
       ),

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mvvm_project/app/components/block_button.dart';
-import 'package:flutter_mvvm_project/app/components/white_space.dart';
+import 'package:flutter_mvvm_project/app/components/buttons/block_button.dart';
+import 'package:flutter_mvvm_project/app/components/globals/white_space.dart';
 import 'package:flutter_mvvm_project/app/models/cart_model.dart';
-import 'package:flutter_mvvm_project/app/views/checkout_screen/checkout_screen.dart';
+import 'package:flutter_mvvm_project/app/routes/routing_constants.dart';
+import 'package:flutter_mvvm_project/app/routes/screen_arguments.dart';
 
 import 'cart_item.dart';
 
@@ -53,13 +54,12 @@ class Body extends StatelessWidget {
           BlockButton(
             title: 'Proceed to Checkout',
             onPressAction: () {
-              Navigator.push(
+              Navigator.pushNamed(
                 context,
-                MaterialPageRoute(
-                  builder: (_) => CheckoutScreen(
-                    totalPrice: calculateTotalPrice(cartItems),
-                    items: cartItems.length,
-                  ),
+                checkoutViewRoute,
+                arguments: ScreenArguments(
+                  cartItems.length,
+                  calculateTotalPrice(cartItems),
                 ),
               );
             },

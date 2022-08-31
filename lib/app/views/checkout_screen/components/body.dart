@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mvvm_project/app/components/payment_button.dart';
-import 'package:flutter_mvvm_project/app/components/white_space.dart';
+import 'package:flutter_mvvm_project/app/components/buttons/payment_button.dart';
+import 'package:flutter_mvvm_project/app/components/globals/white_space.dart';
 import 'package:flutter_mvvm_project/app/services/payment/payment_service.dart';
 import 'package:flutter_mvvm_project/app/services/toast/toast_service.dart';
 import 'package:flutter_mvvm_project/app/views/checkout_screen/components/virtual_card.dart';

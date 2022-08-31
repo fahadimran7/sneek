@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mvvm_project/app/components/form_busy_button.dart';
-import 'package:flutter_mvvm_project/app/components/form_input_field.dart';
+import 'package:flutter_mvvm_project/app/components/forms/form_busy_button.dart';
+import 'package:flutter_mvvm_project/app/components/forms/form_input_field.dart';
 import 'package:flutter_mvvm_project/app/helpers/validators.dart';
+import 'package:flutter_mvvm_project/app/routes/routing_constants.dart';
 import 'package:flutter_mvvm_project/app/views/home_screen/home_screen.dart';
 import 'package:provider/provider.dart';
-import '../../../components/white_space.dart';
+import '../../../components/globals/white_space.dart';
 import '../../../services/auth/authentication_service.dart';
 
 class LoginForm extends StatefulWidget {
-  const LoginForm({Key? key, this.toggleView}) : super(key: key);
-  final void Function()? toggleView;
+  const LoginForm({Key? key}) : super(key: key);
 
   @override
   State<LoginForm> createState() => _LoginFormState();
@@ -98,7 +98,9 @@ class _LoginFormState extends State<LoginForm> {
           ),
           const WhiteSpace(),
           TextButton(
-            onPressed: widget.toggleView,
+            onPressed: () {
+              Navigator.pushNamed(context, registerViewRoute);
+            },
             child: const Text('Don\'t have an account? Register Now'),
           ),
           Text(

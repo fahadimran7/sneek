@@ -1,9 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mvvm_project/app/components/white_space.dart';
-import 'package:flutter_mvvm_project/app/views/payment_history_screen/payment_history_screen.dart';
-import 'package:flutter_mvvm_project/app/views/profile_screen/profile_screen.dart';
-import '../services/auth/authentication_service.dart';
+import 'package:flutter_mvvm_project/app/components/globals/white_space.dart';
+import 'package:flutter_mvvm_project/app/routes/routing_constants.dart';
+import '../../services/auth/authentication_service.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({
@@ -69,24 +68,14 @@ class CustomDrawer extends StatelessWidget {
             leading: const Icon(Icons.history),
             title: const Text('Purchase History'),
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => const PaymentHistory(),
-                ),
-              );
+              Navigator.pushNamed(context, purchaseHistoryViewRoute);
             },
           ),
           ListTile(
             leading: const Icon(Icons.person),
             title: const Text('Your Profile'),
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => const ProfileScreen(),
-                ),
-              );
+              Navigator.pushNamed(context, profileViewRoute);
             },
           ),
         ],

@@ -4,7 +4,7 @@ import 'package:flutter_mvvm_project/app/services/auth/authentication_service.da
 import 'package:flutter_mvvm_project/app/services/cart/cart_service.dart';
 import 'package:flutter_mvvm_project/app/services/toast/toast_service.dart';
 import 'package:provider/provider.dart';
-import '../../../components/white_space.dart';
+import '../../../components/globals/white_space.dart';
 import '../../../models/product_model.dart';
 
 class ProductCard extends StatelessWidget {

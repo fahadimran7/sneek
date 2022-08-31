@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mvvm_project/app/components/white_space.dart';
+import 'package:flutter_mvvm_project/app/components/globals/white_space.dart';
 
 class SplashContent extends StatelessWidget {
   const SplashContent({

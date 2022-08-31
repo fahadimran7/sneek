@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../views/cart_screen/cart_screen.dart';
+import 'package:flutter_mvvm_project/app/routes/routing_constants.dart';
 
 class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
   const CustomAppBar({
@@ -28,12 +27,7 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
           ? <Widget>[
               IconButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const CartScreen(),
-                    ),
-                  );
+                  Navigator.pushNamed(context, cartViewRoute);
                 },
                 icon: const Icon(
                   Icons.shopping_cart_outlined,
