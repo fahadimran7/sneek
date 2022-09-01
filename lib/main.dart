@@ -9,6 +9,7 @@ import 'package:flutter_mvvm_project/app/view_models/checkout_viewmodel.dart';
 import 'package:flutter_mvvm_project/app/view_models/home_viewmodel.dart';
 import 'package:flutter_mvvm_project/app/view_models/login_viewmodel.dart';
 import 'package:flutter_mvvm_project/app/view_models/payment_history_viewmodel.dart';
+import 'package:flutter_mvvm_project/app/view_models/product_details_viewmodel.dart';
 import 'package:flutter_mvvm_project/app/view_models/profile_viewmodel.dart';
 import 'package:flutter_mvvm_project/app/view_models/register_viewmodel.dart';
 import 'package:flutter_mvvm_project/app/views/on_boarding/on_boarding_screen.dart';
@@ -53,6 +54,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => ProductViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ProductDetailsViewModel(),
         ),
         ChangeNotifierProvider(
           create: (_) => ProfileViewModel(),

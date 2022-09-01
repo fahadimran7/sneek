@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mvvm_project/app/routes/product_arguments.dart';
 import 'package:flutter_mvvm_project/app/routes/routing_constants.dart';
 import 'package:flutter_mvvm_project/app/routes/screen_arguments.dart';
 import 'package:flutter_mvvm_project/app/views/cart_screen/cart_screen.dart';
@@ -7,6 +8,7 @@ import 'package:flutter_mvvm_project/app/views/home_screen/home_screen.dart';
 import 'package:flutter_mvvm_project/app/views/login_screen/login_screen.dart';
 import 'package:flutter_mvvm_project/app/views/on_boarding/on_boarding_screen.dart';
 import 'package:flutter_mvvm_project/app/views/payment_history_screen/payment_history_screen.dart';
+import 'package:flutter_mvvm_project/app/views/product_details/product_details.dart';
 import 'package:flutter_mvvm_project/app/views/profile_screen/profile_screen.dart';
 import 'package:flutter_mvvm_project/app/views/register_screen/register_screen.dart';
 import 'package:flutter_mvvm_project/app/views/undefined_screen/undefined_screen.dart';
@@ -37,6 +39,20 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         builder: (_) => CheckoutScreen(
           items: args.items,
           totalPrice: args.totalPrice,
+        ),
+      );
+    case productDetailsViewRoute:
+      var args = settings.arguments as ProductArguments;
+      return MaterialPageRoute(
+        builder: (_) => ProductDetails(
+          id: args.id,
+          name: args.name,
+          details: args.details,
+          price: args.price,
+          imageUrl: args.imageUrl,
+          quantity: args.quantity,
+          rating: args.rating,
+          description: args.description,
         ),
       );
     case onBoardingViewRoute:

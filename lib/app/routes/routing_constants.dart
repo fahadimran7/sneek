@@ -8,3 +8,4 @@ const String purchaseHistoryViewRoute = '/purchase-history';
 const String profileViewRoute = '/profile';
 const String checkoutViewRoute = '/checkout';
 const String authenticateViewRoute = '/authenticate';
+const String productDetailsViewRoute = '/product-details';
