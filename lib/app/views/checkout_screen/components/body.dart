@@ -66,7 +66,7 @@ class _BodyState extends State<Body> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const VirtualCard(title: 'Standarad Chartered'),
+          // const VirtualCard(title: 'Standarad Chartered'),
           const WhiteSpace(
             size: 'lg',
           ),

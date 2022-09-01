@@ -3,10 +3,10 @@ import 'package:flutter_mvvm_project/app/components/forms/form_busy_button.dart'
 import 'package:flutter_mvvm_project/app/components/forms/form_input_field.dart';
 import 'package:flutter_mvvm_project/app/helpers/validators.dart';
 import 'package:flutter_mvvm_project/app/routes/routing_constants.dart';
+import 'package:flutter_mvvm_project/app/view_models/login_viewmodel.dart';
 import 'package:flutter_mvvm_project/app/views/home_screen/home_screen.dart';
 import 'package:provider/provider.dart';
 import '../../../components/globals/white_space.dart';
-import '../../../services/auth/authentication_service.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({Key? key}) : super(key: key);
@@ -18,8 +18,6 @@ class LoginForm extends StatefulWidget {
 class _LoginFormState extends State<LoginForm> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  String error = '';
-  bool loading = false;
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -30,44 +28,30 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   // Login Action
-  onSubmitAction(authService) async {
+  onSubmitAction(loginViewModel) async {
     if (_formKey.currentState!.validate()) {
-      setState(() {
-        loading = true;
-      });
-
-      final res = await authService.signInWithEmailAndPassword(
+      await loginViewModel.signIn(
         email: emailController.text,
         password: passwordController.text,
       );
 
-      if (res is! bool) {
-        setState(() {
-          loading = false;
-          error = res;
-        });
-      } else {
-        setState(() {
-          loading = false;
-        });
+      if (loginViewModel.error != '') return;
 
-        if (!mounted) return;
-
-        // Todo: Use named routes
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-            builder: (_) => const HomeScreen(),
-          ),
-          (Route<dynamic> route) => false,
-        );
-      }
+      if (!mounted) return;
+      // Todo: Use named routes
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (_) => const HomeScreen(),
+        ),
+        (Route<dynamic> route) => false,
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final authService = context.read<AuthenticationService>();
+    LoginViewModel loginViewModel = context.watch<LoginViewModel>();
 
     return Form(
       key: _formKey,
@@ -93,8 +77,8 @@ class _LoginFormState extends State<LoginForm> {
           ),
           FormBusyButton(
             title: 'Login',
-            onSubmitAction: () => onSubmitAction(authService),
-            loading: loading,
+            onSubmitAction: () => onSubmitAction(loginViewModel),
+            loading: loginViewModel.loading,
           ),
           const WhiteSpace(),
           TextButton(
@@ -104,7 +88,7 @@ class _LoginFormState extends State<LoginForm> {
             child: const Text('Don\'t have an account? Register Now'),
           ),
           Text(
-            error,
+            loginViewModel.error,
             style: const TextStyle(color: Colors.red, fontSize: 14.0),
           ),
         ],

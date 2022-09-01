@@ -5,6 +5,7 @@ import 'package:flutter_mvvm_project/app/components/globals/app_loading.dart';
 import 'package:flutter_mvvm_project/app/components/globals/app_no_records.dart';
 import 'package:flutter_mvvm_project/app/services/auth/authentication_service.dart';
 import 'package:flutter_mvvm_project/app/services/users/user_service.dart';
+import 'package:flutter_mvvm_project/app/view_models/home_viewmodel.dart';
 import 'package:flutter_mvvm_project/app/views/products_screen/products_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -18,12 +19,11 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    final authService = context.read<AuthenticationService>();
-    final userService = context.read<UserService>();
+    final homeViewModel = context.read<HomeViewModel>();
     return Scaffold(
       body: FutureBuilder<DocumentSnapshot>(
-        future: userService.findUserById(
-          uid: authService.loggedInUser()!.uid,
+        future: homeViewModel.findUserById(
+          uid: homeViewModel.getLoggedInUser()!.uid,
         ),
         builder:
             (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {

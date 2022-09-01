@@ -2,17 +2,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mvvm_project/app/components/globals/white_space.dart';
 import 'package:flutter_mvvm_project/app/routes/routing_constants.dart';
-import '../../services/auth/authentication_service.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({
     Key? key,
     required this.data,
-    required this.authService,
   }) : super(key: key);
 
   final Map<String, dynamic> data;
-  final AuthenticationService authService;
 
   @override
   Widget build(BuildContext context) {

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mvvm_project/app/services/auth/authentication_service.dart';
 import 'package:flutter_mvvm_project/app/services/cart/cart_service.dart';
 import 'package:flutter_mvvm_project/app/services/toast/toast_service.dart';
+import 'package:flutter_mvvm_project/app/view_models/product_viewmodel.dart';
 import 'package:provider/provider.dart';
 import '../../../components/globals/white_space.dart';
 import '../../../models/product_model.dart';
@@ -18,9 +19,9 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cartService = context.read<CartService>();
-    final authService = context.read<AuthenticationService>();
+    final productViewModel = context.read<ProductViewModel>();
     final toastService = context.read<ToastService>();
-    final uid = authService.loggedInUser()!.uid;
+    final uid = productViewModel.getLoggedInUser()!.uid;
 
     return Card(
       shape: RoundedRectangleBorder(
