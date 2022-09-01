@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mvvm_project/app/services/auth/authentication_service.dart';
-import 'package:flutter_mvvm_project/app/services/users/user_service.dart';
 import 'package:provider/provider.dart';
 import '../../../components/globals/white_space.dart';
 import '../../../view_models/profile_viewmodel.dart';

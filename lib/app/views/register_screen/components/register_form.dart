@@ -3,11 +3,9 @@ import 'package:flutter_mvvm_project/app/components/forms/form_busy_button.dart'
 import 'package:flutter_mvvm_project/app/components/forms/form_input_field.dart';
 import 'package:flutter_mvvm_project/app/helpers/validators.dart';
 import 'package:flutter_mvvm_project/app/routes/routing_constants.dart';
-import 'package:flutter_mvvm_project/app/services/users/user_service.dart';
 import 'package:flutter_mvvm_project/app/view_models/register_viewmodel.dart';
 import 'package:provider/provider.dart';
 import '../../../components/globals/white_space.dart';
-import '../../../services/auth/authentication_service.dart';
 
 class RegisterForm extends StatefulWidget {
   const RegisterForm({Key? key}) : super(key: key);

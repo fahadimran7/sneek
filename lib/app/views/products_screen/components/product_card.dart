@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mvvm_project/app/services/auth/authentication_service.dart';
 import 'package:flutter_mvvm_project/app/services/cart/cart_service.dart';
 import 'package:flutter_mvvm_project/app/services/toast/toast_service.dart';
 import 'package:flutter_mvvm_project/app/view_models/product_viewmodel.dart';

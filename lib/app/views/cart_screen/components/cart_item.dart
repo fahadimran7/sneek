@@ -1,10 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mvvm_project/app/services/auth/authentication_service.dart';
-import 'package:flutter_mvvm_project/app/services/cart/cart_service.dart';
-import 'package:flutter_mvvm_project/app/services/toast/toast_service.dart';
+import 'package:flutter_mvvm_project/app/view_models/cart_viewmodel.dart';
 import 'package:provider/provider.dart';
-
 import '../../../components/globals/white_space.dart';
 import '../../../models/cart_model.dart';
 
@@ -18,9 +15,7 @@ class CartItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cartService = context.read<CartService>();
-    final authService = context.read<AuthenticationService>();
-    final toastService = context.read<ToastService>();
+    final cartViewModel = context.watch<CartViewModel>();
 
     return Dismissible(
       key: Key(cartItem.id!),
@@ -40,13 +35,13 @@ class CartItem extends StatelessWidget {
       ),
       direction: DismissDirection.endToStart,
       onDismissed: (direction) async {
-        final res = await cartService.removeItemFromCart(
-            authService.loggedInUser()!.uid, cartItem.id);
+        await cartViewModel.removeCartItem(
+            cartViewModel.getLoggedInUser()!.uid, cartItem.id);
 
-        if (res is bool) {
-          toastService.showToast('Item removed from shopping cart');
+        if (cartViewModel.isItemRemoved) {
+          cartViewModel.showToast('Item removed from shopping cart');
         } else {
-          toastService
+          cartViewModel
               .showToast('Unable to remove item from your shopping cart');
         }
       },

@@ -76,7 +76,6 @@ class CartService {
         _db.collection(cartPath).doc(uid).collection('items').doc(itemId);
     try {
       await docRef.delete();
-
       return true;
     } catch (e) {
       return e.toString();

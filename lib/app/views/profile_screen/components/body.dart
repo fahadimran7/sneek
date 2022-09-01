@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mvvm_project/app/components/forms/form_busy_button.dart';
 import 'package:flutter_mvvm_project/app/components/globals/white_space.dart';
 import 'package:flutter_mvvm_project/app/routes/routing_constants.dart';
-import 'package:flutter_mvvm_project/app/services/auth/authentication_service.dart';
 import 'package:flutter_mvvm_project/app/view_models/profile_viewmodel.dart';
 import 'package:flutter_mvvm_project/app/views/checkout_screen/components/virtual_card.dart';
 import 'package:provider/provider.dart';

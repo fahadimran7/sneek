@@ -8,6 +8,7 @@ import 'package:flutter_mvvm_project/app/services/payment/payment_service.dart';
 import 'package:flutter_mvvm_project/app/services/service_locator.dart';
 import 'package:flutter_mvvm_project/app/services/toast/toast_service.dart';
 import 'package:flutter_mvvm_project/app/services/users/user_service.dart';
+import 'package:flutter_mvvm_project/app/view_models/cart_viewmodel.dart';
 import 'package:flutter_mvvm_project/app/view_models/home_viewmodel.dart';
 import 'package:flutter_mvvm_project/app/view_models/login_viewmodel.dart';
 import 'package:flutter_mvvm_project/app/view_models/profile_viewmodel.dart';
@@ -42,6 +43,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => RegisterViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => CartViewModel(),
         ),
         Provider(
           create: (_) => UserService(),
