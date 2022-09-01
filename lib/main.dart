@@ -11,6 +11,7 @@ import 'package:flutter_mvvm_project/app/services/users/user_service.dart';
 import 'package:flutter_mvvm_project/app/view_models/home_viewmodel.dart';
 import 'package:flutter_mvvm_project/app/view_models/login_viewmodel.dart';
 import 'package:flutter_mvvm_project/app/view_models/profile_viewmodel.dart';
+import 'package:flutter_mvvm_project/app/view_models/register_viewmodel.dart';
 import 'package:flutter_mvvm_project/app/views/on_boarding/on_boarding_screen.dart';
 import 'package:flutter_mvvm_project/app/views/home_screen/home_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -37,16 +38,19 @@ class MyApp extends StatelessWidget {
           create: (_) => LoginViewModel(),
         ),
         ChangeNotifierProvider(
-          create: (_) => ProfileViewModel(),
+          create: (_) => HomeViewModel(),
         ),
         ChangeNotifierProvider(
-          create: (_) => HomeViewModel(),
+          create: (_) => RegisterViewModel(),
         ),
         Provider(
           create: (_) => UserService(),
         ),
         ChangeNotifierProvider(
           create: (_) => ProductViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ProfileViewModel(),
         ),
         Provider(
           create: (_) => CartService(),

@@ -3,6 +3,7 @@ import 'package:flutter_mvvm_project/app/services/auth/authentication_service.da
 import 'package:flutter_mvvm_project/app/services/users/user_service.dart';
 import 'package:provider/provider.dart';
 import '../../../components/globals/white_space.dart';
+import '../../../view_models/profile_viewmodel.dart';
 
 class VirtualCard extends StatelessWidget {
   const VirtualCard({
@@ -13,12 +14,11 @@ class VirtualCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userService = context.read<UserService>();
-    final authService = context.read<AuthenticationService>();
-    final uid = authService.loggedInUser()!.uid;
+    final profileViewModel = context.read<ProfileViewModel>();
 
     return FutureBuilder(
-      future: userService.getUserBalance(uid),
+      future: profileViewModel
+          .getUserBalance(profileViewModel.getLoggedInUser()!.uid),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           return Container(
@@ -68,7 +68,7 @@ class VirtualCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '\$${snapshot.data}',
+                      '\$${profileViewModel.userBalance}',
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 24,

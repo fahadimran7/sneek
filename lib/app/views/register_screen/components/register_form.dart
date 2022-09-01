@@ -4,6 +4,7 @@ import 'package:flutter_mvvm_project/app/components/forms/form_input_field.dart'
 import 'package:flutter_mvvm_project/app/helpers/validators.dart';
 import 'package:flutter_mvvm_project/app/routes/routing_constants.dart';
 import 'package:flutter_mvvm_project/app/services/users/user_service.dart';
+import 'package:flutter_mvvm_project/app/view_models/register_viewmodel.dart';
 import 'package:provider/provider.dart';
 import '../../../components/globals/white_space.dart';
 import '../../../services/auth/authentication_service.dart';
@@ -32,58 +33,29 @@ class _RegisterFormState extends State<RegisterForm> {
   }
 
   // Register Action
-  onSubmitAction(authService, userService) async {
+  onSubmitAction(registerViewModel) async {
     // Form validates successfully
     if (_formKey.currentState!.validate()) {
-      setState(() {
-        loading = true;
-      });
-
       // Firebase Auth create user
-      final user = await authService.registerNewUser(
+      await registerViewModel.signUp(
         email: emailController.text,
         password: passwordController.text,
+        name: nameController.text,
+        balance: 100,
       );
 
-      if (user == null) {
-        setState(() {
-          loading = false;
-          error = 'Unable to register with given credentails!';
-        });
-      } else {
-        // Add user document to Firestore
-        final savedUser = await userService.addUserToFirestore(
-          email: emailController.text,
-          name: nameController.text,
-          balance: 100,
-          uid: user.uid,
-        );
+      if (registerViewModel.error != '') return;
 
-        // Document save error
-        if (savedUser == null) {
-          setState(() {
-            loading = false;
-            error = 'User profile not created!';
-          });
-        } else {
-          // All OK redirect to Home Page
-          setState(() {
-            loading = false;
-          });
+      if (!mounted) return;
 
-          if (!mounted) return;
-
-          Navigator.pushNamedAndRemoveUntil(
-              context, homeViewRoute, (route) => false);
-        }
-      }
+      Navigator.pushNamedAndRemoveUntil(
+          context, homeViewRoute, (route) => false);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final authService = context.read<AuthenticationService>();
-    final userService = context.read<UserService>();
+    final registerViewModel = context.watch<RegisterViewModel>();
 
     return Form(
       key: _formKey,
@@ -117,9 +89,10 @@ class _RegisterFormState extends State<RegisterForm> {
             size: 'md',
           ),
           FormBusyButton(
-              title: 'Register',
-              onSubmitAction: () => onSubmitAction(authService, userService),
-              loading: loading),
+            title: 'Register',
+            onSubmitAction: () => onSubmitAction(registerViewModel),
+            loading: registerViewModel.loading,
+          ),
           const WhiteSpace(),
           TextButton(
             onPressed: () {
@@ -128,7 +101,7 @@ class _RegisterFormState extends State<RegisterForm> {
             child: const Text('Already have an account? Login'),
           ),
           Text(
-            error,
+            registerViewModel.error,
             style: const TextStyle(color: Colors.red, fontSize: 14.0),
           ),
         ],

@@ -38,6 +38,7 @@ class _LoginFormState extends State<LoginForm> {
       if (loginViewModel.error != '') return;
 
       if (!mounted) return;
+
       // Todo: Use named routes
       Navigator.pushAndRemoveUntil(
         context,

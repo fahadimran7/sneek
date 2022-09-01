@@ -33,7 +33,7 @@ class AuthenticationService {
 
       return user.user;
     } catch (e) {
-      return null;
+      return false;
     }
   }
 

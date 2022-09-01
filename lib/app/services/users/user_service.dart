@@ -14,13 +14,10 @@ class UserService {
       required String uid}) async {
     try {
       final userData = UserModel(name: name, email: email, balance: balance);
-
       await _db.collection(usersPath).doc(uid).set(userData.toJson());
-
       return true;
     } catch (e) {
-      log(e.toString());
-      return null;
+      return e.toString();
     }
   }
 

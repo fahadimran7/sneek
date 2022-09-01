@@ -3,6 +3,7 @@ import 'package:flutter_mvvm_project/app/components/forms/form_busy_button.dart'
 import 'package:flutter_mvvm_project/app/components/globals/white_space.dart';
 import 'package:flutter_mvvm_project/app/routes/routing_constants.dart';
 import 'package:flutter_mvvm_project/app/services/auth/authentication_service.dart';
+import 'package:flutter_mvvm_project/app/view_models/profile_viewmodel.dart';
 import 'package:flutter_mvvm_project/app/views/checkout_screen/components/virtual_card.dart';
 import 'package:provider/provider.dart';
 
@@ -25,27 +26,16 @@ class _BodyState extends State<Body> {
   bool loading = false;
 
   // Helpers
-  onSubmitAction(authService) async {
-    setState(() {
-      loading = true;
-    });
+  onSubmitAction(profileViewModel) async {
+    await profileViewModel.logOut();
 
-    final res = await authService.logOut();
-
-    if (res is bool) {
-      if (!mounted) return;
-
-      setState(() {
-        loading = false;
-      });
-
-      Navigator.pushNamed(context, onBoardingViewRoute);
-    }
+    if (!mounted) return;
+    Navigator.pushNamed(context, onBoardingViewRoute);
   }
 
   @override
   Widget build(BuildContext context) {
-    final authService = context.read<AuthenticationService>();
+    final profileViewModel = context.watch<ProfileViewModel>();
 
     return Padding(
       padding: const EdgeInsets.all(20),
@@ -60,8 +50,8 @@ class _BodyState extends State<Body> {
           _buildDetailsRow('Card', 'Standard Chartered'),
           const Spacer(),
           FormBusyButton(
-            onSubmitAction: () => onSubmitAction(authService),
-            loading: loading,
+            onSubmitAction: () => onSubmitAction(profileViewModel),
+            loading: profileViewModel.loading,
             title: 'Log out',
           )
         ],
@@ -94,5 +84,3 @@ _buildDetailsRow(title, value) {
     ],
   );
 }
-
-onSubmitHandler() {}
