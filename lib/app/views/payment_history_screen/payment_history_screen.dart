@@ -4,7 +4,8 @@ import 'package:flutter_mvvm_project/app/components/globals/app_error.dart';
 import 'package:flutter_mvvm_project/app/components/globals/app_loading.dart';
 import 'package:flutter_mvvm_project/app/components/globals/app_no_records.dart';
 import 'package:flutter_mvvm_project/app/models/payment_model.dart';
-import 'package:flutter_mvvm_project/app/services/payment/payment_service.dart';
+import 'package:flutter_mvvm_project/app/view_models/payment_history_viewmodel.dart';
+import 'package:provider/provider.dart';
 import '../../components/globals/custom_app_bar.dart';
 import 'components/body.dart';
 
@@ -15,14 +16,16 @@ class PaymentHistory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final paymentHistoryViewModel = context.watch<PaymentHistoryViewModel>();
+
     return Scaffold(
       appBar: const CustomAppBar(
         title: 'Purchase History',
         enableActions: false,
       ),
       body: StreamBuilder(
-        stream: PaymentService()
-            .getPaymentHistoryForUser(FirebaseAuth.instance.currentUser!.uid),
+        stream: paymentHistoryViewModel
+            .getPaymentHistoryStream(FirebaseAuth.instance.currentUser!.uid),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const AppLoading();

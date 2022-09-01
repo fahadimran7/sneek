@@ -1,4 +1,5 @@
 import 'package:flutter_mvvm_project/app/services/cart/cart_service.dart';
+import 'package:flutter_mvvm_project/app/services/payment/payment_service.dart';
 import 'package:flutter_mvvm_project/app/services/products/product_service.dart';
 import 'package:flutter_mvvm_project/app/services/toast/toast_service.dart';
 import 'package:flutter_mvvm_project/app/services/users/user_service.dart';
@@ -27,5 +28,9 @@ void setup() {
 
   locator.registerLazySingleton<ToastService>(
     () => ToastService(),
+  );
+
+  locator.registerLazySingleton<PaymentService>(
+    () => PaymentService(),
   );
 }

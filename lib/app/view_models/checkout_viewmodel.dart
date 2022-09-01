@@ -1,20 +1,26 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_mvvm_project/app/services/auth/authentication_service.dart';
-import 'package:flutter_mvvm_project/app/services/users/user_service.dart';
+import 'package:flutter_mvvm_project/app/services/payment/payment_service.dart';
+import 'package:flutter_mvvm_project/app/services/toast/toast_service.dart';
 import 'package:flutter_mvvm_project/app/view_models/base_viewmodel.dart';
 import '../services/service_locator.dart';
 
 class CheckoutViewModel extends BaseViewModel {
-  final UserService _userService = locator<UserService>();
-  final AuthenticationService _authenticationService =
-      locator<AuthenticationService>();
+  final ToastService _toastService = locator<ToastService>();
+  final PaymentService _paymentService = locator<PaymentService>();
 
-  Future<DocumentSnapshot<Object?>> findUserById({required String uid}) async {
-    return await _userService.findUserById(uid: uid);
+  Future<dynamic> completePayment(num totalAmount) async {
+    setLoading(true);
+    final res = await _paymentService.completePayment(totalAmount);
+
+    if (res is! bool) {
+      setError(res);
+      setLoading(false);
+    } else {
+      setError('');
+      setLoading(false);
+    }
   }
 
-  User? getLoggedInUser() {
-    return _authenticationService.loggedInUser();
+  showToast(message) {
+    _toastService.showToast(message);
   }
 }

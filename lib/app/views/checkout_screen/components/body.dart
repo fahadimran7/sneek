@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mvvm_project/app/components/buttons/payment_button.dart';
 import 'package:flutter_mvvm_project/app/components/globals/white_space.dart';
-import 'package:flutter_mvvm_project/app/services/payment/payment_service.dart';
-import 'package:flutter_mvvm_project/app/services/toast/toast_service.dart';
+import 'package:flutter_mvvm_project/app/view_models/checkout_viewmodel.dart';
 import 'package:flutter_mvvm_project/app/views/checkout_screen/components/virtual_card.dart';
 import 'package:flutter_mvvm_project/app/views/success_screen/success_screen.dart';
 import 'package:provider/provider.dart';
@@ -22,31 +21,20 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    final paymentService = context.read<PaymentService>();
-    final toastService = context.read<ToastService>();
+    final checkoutViewModel = context.watch<CheckoutViewModel>();
 
     // Helpers
     onSubmitAction() async {
-      setState(() {
-        loading = true;
-      });
+      await checkoutViewModel.completePayment(widget.totalPrice);
 
-      final res = await paymentService.completePayment(widget.totalPrice);
-
-      if (res is! bool) {
-        setState(() {
-          loading = false;
-        });
-
-        toastService.showToast(
+      if (checkoutViewModel.error != '') {
+        checkoutViewModel.showToast(
           'Sorry your payment could not be completed',
         );
-      } else {
-        setState(() {
-          loading = false;
-        });
 
-        toastService.showToast(
+        return;
+      } else {
+        checkoutViewModel.showToast(
           'Payment completed successfully',
         );
 
@@ -88,7 +76,7 @@ class _BodyState extends State<Body> {
           _buildAmountRow('Total', widget.totalPrice.toStringAsFixed(2)),
           const Spacer(),
           PaymentButton(
-            loading: loading,
+            loading: checkoutViewModel.loading,
             onSubmitAction: () => onSubmitAction(),
             title:
                 'Complete Payment (\$${widget.totalPrice.toStringAsFixed(2)})',

@@ -1,7 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mvvm_project/app/services/cart/cart_service.dart';
-import 'package:flutter_mvvm_project/app/services/toast/toast_service.dart';
 import 'package:flutter_mvvm_project/app/view_models/product_viewmodel.dart';
 import 'package:provider/provider.dart';
 import '../../../components/globals/white_space.dart';
@@ -17,10 +15,7 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cartService = context.read<CartService>();
-    final productViewModel = context.read<ProductViewModel>();
-    final toastService = context.read<ToastService>();
-    final uid = productViewModel.getLoggedInUser()!.uid;
+    final productViewModel = context.watch<ProductViewModel>();
 
     return Card(
       shape: RoundedRectangleBorder(
@@ -81,8 +76,8 @@ class ProductCard extends StatelessWidget {
                     icon: const Icon(Icons.add_shopping_cart_sharp),
                     tooltip: 'Add product to cart',
                     onPressed: () async {
-                      final res = await cartService.addItemToCart(
-                        uid,
+                      await productViewModel.addItemToCart(
+                        productViewModel.getLoggedInUser()!.uid,
                         product.id,
                         product.name,
                         product.description,
@@ -91,12 +86,12 @@ class ProductCard extends StatelessWidget {
                         product.imageUrl,
                       );
 
-                      if (res is bool) {
-                        toastService.showToast(
+                      if (productViewModel.error == '') {
+                        productViewModel.showToast(
                           'Item added to your shopping cart',
                         );
                       } else {
-                        toastService.showToast(
+                        productViewModel.showToast(
                           'Unable to add item to your shopping cart',
                         );
                       }

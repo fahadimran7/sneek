@@ -3,14 +3,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mvvm_project/app/helpers/constants.dart';
 import 'package:flutter_mvvm_project/app/routes/routing_constants.dart';
-import 'package:flutter_mvvm_project/app/services/cart/cart_service.dart';
-import 'package:flutter_mvvm_project/app/services/payment/payment_service.dart';
 import 'package:flutter_mvvm_project/app/services/service_locator.dart';
-import 'package:flutter_mvvm_project/app/services/toast/toast_service.dart';
-import 'package:flutter_mvvm_project/app/services/users/user_service.dart';
 import 'package:flutter_mvvm_project/app/view_models/cart_viewmodel.dart';
+import 'package:flutter_mvvm_project/app/view_models/checkout_viewmodel.dart';
 import 'package:flutter_mvvm_project/app/view_models/home_viewmodel.dart';
 import 'package:flutter_mvvm_project/app/view_models/login_viewmodel.dart';
+import 'package:flutter_mvvm_project/app/view_models/payment_history_viewmodel.dart';
 import 'package:flutter_mvvm_project/app/view_models/profile_viewmodel.dart';
 import 'package:flutter_mvvm_project/app/view_models/register_viewmodel.dart';
 import 'package:flutter_mvvm_project/app/views/on_boarding/on_boarding_screen.dart';
@@ -47,23 +45,17 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => CartViewModel(),
         ),
-        Provider(
-          create: (_) => UserService(),
+        ChangeNotifierProvider(
+          create: (_) => CheckoutViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => PaymentHistoryViewModel(),
         ),
         ChangeNotifierProvider(
           create: (_) => ProductViewModel(),
         ),
         ChangeNotifierProvider(
           create: (_) => ProfileViewModel(),
-        ),
-        Provider(
-          create: (_) => CartService(),
-        ),
-        Provider(
-          create: (_) => ToastService(),
-        ),
-        Provider(
-          create: (_) => PaymentService(),
         ),
       ],
       child: MaterialApp(
