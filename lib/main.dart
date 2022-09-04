@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_mvvm_project/app/helpers/constants.dart';
 import 'package:flutter_mvvm_project/app/routes/routing_constants.dart';
 import 'package:flutter_mvvm_project/app/services/service_locator.dart';
@@ -14,16 +15,19 @@ import 'package:flutter_mvvm_project/app/view_models/profile_viewmodel.dart';
 import 'package:flutter_mvvm_project/app/view_models/register_viewmodel.dart';
 import 'package:flutter_mvvm_project/app/views/on_boarding/on_boarding_screen.dart';
 import 'package:flutter_mvvm_project/app/views/home_screen/home_screen.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'app/routes/router.dart' as router;
-
 import 'app/view_models/product_viewmodel.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   setup();
+  await dotenv.load(fileName: ".env");
+  Stripe.publishableKey = dotenv.env['PUBLISHABLE_KEY']!;
+  await Stripe.instance.applySettings();
   runApp(const MyApp());
 }
 
