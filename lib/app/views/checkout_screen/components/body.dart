@@ -10,7 +10,6 @@ import 'package:flutter_mvvm_project/app/views/checkout_screen/components/virtua
 import 'package:flutter_mvvm_project/app/views/success_screen/success_screen.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:provider/provider.dart';
-import 'package:http/http.dart' as http;
 
 class Body extends StatefulWidget {
   const Body({Key? key, required this.totalPrice, required this.items})
@@ -29,48 +28,6 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     final checkoutViewModel = context.watch<CheckoutViewModel>();
 
-    Future<dynamic> initPaymentSheet(context,
-        {required String email, required int amount}) async {
-      try {
-        // 1. create payment intent on the server
-        final response = await http.post(
-            Uri.parse(
-                'https://us-central1-fir-mvvm-project.cloudfunctions.net/stripePaymentIntentRequest'),
-            body: {
-              'email': email,
-              'amount': amount.toString(),
-            });
-
-        final jsonResponse = jsonDecode(response.body);
-        log(jsonResponse.toString());
-
-        //2. initialize the payment sheet
-        await Stripe.instance.initPaymentSheet(
-          paymentSheetParameters: SetupPaymentSheetParameters(
-            paymentIntentClientSecret: jsonResponse['paymentIntent'],
-            merchantDisplayName: 'Flutter Stripe Store Demo',
-            customerId: jsonResponse['customer'],
-            customerEphemeralKeySecret: jsonResponse['ephemeralKey'],
-            style: ThemeMode.light,
-          ),
-        );
-
-        await Stripe.instance.presentPaymentSheet();
-
-        return true;
-      } catch (e) {
-        if (e is StripeException) {
-          checkoutViewModel.showToast(
-            '${e.error.localizedMessage}',
-          );
-        } else {
-          checkoutViewModel.showToast(
-            'Error: $e',
-          );
-        }
-      }
-    }
-
     calculateTotalAmount(num amount) {
       return amount.toInt() * 100;
     }
@@ -79,7 +36,7 @@ class _BodyState extends State<Body> {
     onSubmitAction() async {
       if (!mounted) return;
 
-      final res = await initPaymentSheet(
+      final res = await checkoutViewModel.initPaymentSheet(
         context,
         email: FirebaseAuth.instance.currentUser!.email!,
         amount: calculateTotalAmount(widget.totalPrice),
