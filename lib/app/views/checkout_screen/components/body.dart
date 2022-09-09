@@ -36,11 +36,13 @@ class _BodyState extends State<Body> {
     onSubmitAction() async {
       if (!mounted) return;
 
-      final res = await checkoutViewModel.initPaymentSheet(
-        context,
-        email: FirebaseAuth.instance.currentUser!.email!,
-        amount: calculateTotalAmount(widget.totalPrice),
-      );
+      // final res = await checkoutViewModel.initPaymentSheet(
+      //   context,
+      //   email: FirebaseAuth.instance.currentUser!.email!,
+      //   amount: calculateTotalAmount(widget.totalPrice),
+      // );
+
+      final res = true;
 
       if (res is bool) {
         await checkoutViewModel.completePayment(widget.totalPrice);

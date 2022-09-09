@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_mvvm_project/app/models/payment_model.dart';
+import 'package:flutter_mvvm_project/app/models/purchased_model.dart';
 import 'package:flutter_mvvm_project/app/services/auth/authentication_service.dart';
 import 'package:flutter_mvvm_project/app/services/users/user_service.dart';
-import '../../models/cart_model.dart';
+import 'package:uuid/uuid.dart';
 
 class PaymentService {
   final _db = FirebaseFirestore.instance;
@@ -26,32 +27,25 @@ class PaymentService {
 
     num newBalance = currentBalance - totalAmount;
     newBalance = num.parse(newBalance.toStringAsFixed(2));
-    final paymentsItemsRef = [];
 
     // complete payment and update the balance
     try {
-      // add cart items to purchased items
-      final purchasedItemsRef =
-          _db.collection(purchasedPath).doc(uid).collection('items');
-
       // clear the cart
       final collection = _db.collection(cartPath).doc(uid).collection('items');
 
       final snapshots = await collection.get();
+      const uuid = Uuid();
+
+      final cartItems = <String, dynamic>{};
 
       for (var doc in snapshots.docs) {
-        await purchasedItemsRef.doc(doc.id).set(doc.data());
+        cartItems[uuid.v1()] = doc.data();
         await doc.reference.delete();
-
-        final purchasedSnapshots = await purchasedItemsRef.doc(doc.id).get();
-
-        paymentsItemsRef.add(purchasedSnapshots.reference);
       }
 
-      // add itemRef list to payments
       await _db.collection(paymentsPath).doc(uid).collection('history').add({
-        'items': paymentsItemsRef,
-        'timestamp': DateTime.now().microsecondsSinceEpoch
+        'items': cartItems,
+        'timestamp': DateTime.now().millisecondsSinceEpoch,
       });
 
       // Update balance
@@ -63,51 +57,34 @@ class PaymentService {
     }
   }
 
-  Stream<Future<List<PaymentModel>>> getPaymentHistoryForUser(uid) {
+  Future<dynamic> getPaymentHistoryForUser(uid) async {
     final List<PaymentModel> paymentModelList = [];
+    try {
+      final paymentHistoryItems = await _db
+          .collection(paymentsPath)
+          .doc(uid)
+          .collection('history')
+          .orderBy('timestamp', descending: true)
+          .get();
 
-    final paymentStream = _db
-        .collection(paymentsPath)
-        .doc(uid)
-        .collection('history')
-        .orderBy('timestamp', descending: true)
-        .snapshots();
+      for (final doc in paymentHistoryItems.docs) {
+        final List<PurchasedModel> purchaseItemList = [];
 
-    final streamToPublish = paymentStream.map(
-      (snapshot) async {
-        final paymentItemsMap = snapshot.docs;
-
-        for (var snapshot in paymentItemsMap) {
-          final cartItemRefList = [];
-          final List<CartModel> cartItemList = [];
-
-          var itemMap = snapshot.data()['items'];
-          for (var itemRef in itemMap) {
-            final itemId = (await itemRef.get() as DocumentSnapshot).id;
-            cartItemRefList.add(itemId);
-          }
-
-          for (var cartItemRef in cartItemRefList) {
-            final cartItem = await _db
-                .collection(purchasedPath)
-                .doc(uid)
-                .collection('items')
-                .doc(cartItemRef)
-                .get();
-
-            cartItemList.add(
-              CartModel.fromJson(
-                cartItem,
-              ),
-            );
-          }
-          paymentModelList.add(PaymentModel(paymentItemsList: cartItemList));
+        for (final item in doc.data()['items'].values) {
+          final purchaseItem = PurchasedModel.fromJson(item);
+          purchaseItemList.add(purchaseItem);
         }
 
-        return paymentModelList;
-      },
-    );
+        paymentModelList.add(
+          PaymentModel(
+            paymentItemsList: purchaseItemList.reversed.toList(),
+          ),
+        );
+      }
 
-    return streamToPublish;
+      return paymentModelList;
+    } catch (e) {
+      return null;
+    }
   }
 }

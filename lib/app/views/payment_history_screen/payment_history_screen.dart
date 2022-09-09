@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mvvm_project/app/components/globals/app_error.dart';
 import 'package:flutter_mvvm_project/app/components/globals/app_loading.dart';
 import 'package:flutter_mvvm_project/app/components/globals/app_no_records.dart';
 import 'package:flutter_mvvm_project/app/models/payment_model.dart';
@@ -23,33 +22,18 @@ class PaymentHistory extends StatelessWidget {
         title: 'Purchase History',
         enableActions: false,
       ),
-      body: StreamBuilder(
-        stream: paymentHistoryViewModel
-            .getPaymentHistoryStream(FirebaseAuth.instance.currentUser!.uid),
+      body: FutureBuilder(
+        future: paymentHistoryViewModel
+            .paymentHistoryForUser(FirebaseAuth.instance.currentUser!.uid),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const AppLoading();
           }
 
-          if (snapshot.hasData) {
-            return FutureBuilder(
-              future: snapshot.data as Future<List<PaymentModel>>,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const AppLoading();
-                } else if ((snapshot.data as List<PaymentModel>).isNotEmpty) {
-                  return SingleChildScrollView(
-                    child:
-                        Body(paymentItem: snapshot.data as List<PaymentModel>),
-                  );
-                }
-
-                return const AppNoRecords(
-                    message: 'No purchase history items to show');
-              },
+          if ((snapshot.data as List<PaymentModel>).isNotEmpty) {
+            return SingleChildScrollView(
+              child: Body(paymentItem: snapshot.data as List<PaymentModel>),
             );
-          } else if (snapshot.hasError) {
-            return const AppError();
           }
 
           return const AppNoRecords(message: 'No records to show');

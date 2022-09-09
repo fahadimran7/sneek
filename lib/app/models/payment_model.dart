@@ -1,7 +1,7 @@
-import 'package:flutter_mvvm_project/app/models/cart_model.dart';
+import 'package:flutter_mvvm_project/app/models/purchased_model.dart';
 
 class PaymentModel {
-  List<CartModel> paymentItemsList = [];
+  List<PurchasedModel> paymentItemsList = [];
 
   PaymentModel({required this.paymentItemsList});
 }
