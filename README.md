@@ -2,6 +2,13 @@
 
 > Flutter and Firebase sneakers app with Stripe payment integration.
 
+## Features
+
+- Provider for state management
+- Firebase Firestore
+- Firebase cloud functions
+- Stripe payment integration
+
 ## Build Setup
 
 ```
